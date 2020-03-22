@@ -8,10 +8,10 @@ return [
 
     'Datasources' => [
         'default' => [
-            'host' => '127.0.0.1',
-            'username' => 'root',
-            'password' => '',
-            'database' => 'dev_local',
+            'host' => '103.28.38.185',
+            'username' => 'silv',
+            'password' => '123456',
+            'database' => 'dev_web4s',
             /**
              * If not using the default 'public' schema with the PostgreSQL driver
              * set it here.

@@ -21,14 +21,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
 
 
-
-
-
-
-
-
 // router admin
-$routes->scope('/admin', function (RouteBuilder $builder) {
+$routes->scope('/' . ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
         'httpOnly' => true,
     ]));    
@@ -38,6 +32,7 @@ $routes->scope('/admin', function (RouteBuilder $builder) {
     $builder->connect('/', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'login']);
     $builder->connect('/login', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'login']);
     $builder->connect('/user/list', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'listUsers']);
+    $builder->connect('/user/list/:type', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'listUsers'], ['pass' => ['type']]);
 
 
     $builder->fallbacks();

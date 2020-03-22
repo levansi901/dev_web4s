@@ -1,8 +1,8 @@
 <?php
-define('PAGE_DEFAULT_ADMIN', 20);
 
 define('LANG', 'lang');
 define('KEY', 'key');
+define('JSON', 'json');
 define('CODE', 'code');
 define('DATA', 'data');
 define('STATUS', 'status');
