@@ -11,6 +11,12 @@ class UserController extends AppController {
     }
 
     public function viewListUsers($type = null) {    	
+
+    	$this->set('users', []);
+        $this->render('list');
+    }
+
+    public function listUsers(){
     	if($type == JSON){
 
     	}

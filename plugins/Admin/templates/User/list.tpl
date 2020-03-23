@@ -7,7 +7,7 @@
         <th></th>
     </tr>
 
-    <tr v-for='use in uses'>
+    <tr v-for="user in users">
         <td>[user.full_name]</td>
         <td>[user.full_name]</td>
         <td>[user.full_name]</td>

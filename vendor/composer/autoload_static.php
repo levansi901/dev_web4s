@@ -138,7 +138,6 @@ class ComposerStaticInitb4f8438caf14478818a6ecffd9bfaf6c
             'Aura\\Intl\\' => 10,
             'App\\Test\\' => 9,
             'App\\' => 4,
-            'Api\\' => 4,
             'Admin\\' => 6,
         ),
     );
@@ -383,10 +382,6 @@ class ComposerStaticInitb4f8438caf14478818a6ecffd9bfaf6c
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
-        ),
-        'Api\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/plugins/Api/src',
         ),
         'Admin\\' => 
         array (

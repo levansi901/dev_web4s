@@ -32,6 +32,7 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use ReflectionClass;
+use UnexpectedValueException;
 
 /**
  * Command class for generating test files.
@@ -78,6 +79,15 @@ class TestCommand extends BakeCommand
         'Form' => 'Form',
         'Mailer' => 'Mailer',
         'Command' => 'Command',
+    ];
+
+    /**
+     * Blacklisted methods for controller test cases.
+     *
+     * @var string[]
+     */
+    protected $blacklistedMethods = [
+        'initialize',
     ];
 
     /**
@@ -293,7 +303,7 @@ class TestCommand extends BakeCommand
         $filename = $this->testCaseFileName($type, $fullClassName);
         $emptyFile = dirname($filename) . DS . '.gitkeep';
         $this->deleteEmptyFile($emptyFile, $io);
-        if ($io->createFile($filename, $out)) {
+        if ($io->createFile($filename, $out, $args->getOption('force'))) {
             return $out;
         }
 
@@ -415,7 +425,7 @@ class TestCommand extends BakeCommand
             if ($method->getDeclaringClass()->getName() !== $className) {
                 continue;
             }
-            if (!$method->isPublic()) {
+            if (!$method->isPublic() || in_array($method->getName(), $this->blacklistedMethods, true)) {
                 continue;
             }
             $out[] = $method->getName();
@@ -479,7 +489,14 @@ class TestCommand extends BakeCommand
      */
     protected function _processController(Controller $subject): void
     {
-        $models = [$subject->loadModel()->getAlias()];
+        try {
+            $model = $subject->loadModel();
+        } catch (UnexpectedValueException $exception) {
+            // No fixtures needed or possible
+            return;
+        }
+
+        $models = [$model->getAlias()];
         foreach ($models as $model) {
             [, $model] = pluginSplit($model);
             $this->_processModel($subject->{$model});

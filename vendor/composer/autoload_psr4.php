@@ -65,6 +65,5 @@ return array(
     'Aura\\Intl\\' => array($vendorDir . '/aura/intl/src'),
     'App\\Test\\' => array($baseDir . '/tests'),
     'App\\' => array($baseDir . '/src'),
-    'Api\\' => array($baseDir . '/plugins/Api/src'),
     'Admin\\' => array($baseDir . '/plugins/Admin/src'),
 );

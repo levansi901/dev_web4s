@@ -1,5 +1,13 @@
+// if (typeof _admin_path !== 'undefined') {
+//     var _admin_path = '/admin';
+// }
+
+if (typeof _api_path == 'undefined') {
+    var _api_path = '/api';
+}
+
 var app = new Vue({
-    delimiters: '[', ']'],
+    delimiters: ['[', ']'],
     el: '#nh-app',
     data: {
         name: '',
@@ -7,19 +15,18 @@ var app = new Vue({
         country: '',
         city: '',
         job: '',
-        contacts: []
+        users: []
     },
     mounted: function() {
-        console.log('Hello from Vue!')
-        this.getContacts()
+        this.getUsers()
     },
 
     methods: {
         getUsers: function() {
-            axios.get('/api/contacts.php')
-            .then(function (response) {
-                console.log(response.data);
-                app.contacts = response.data;
+            axios.get(_api_path + '/user/list')
+            .then(function (response) { 
+                console.log(response);
+                app.users = response.data;
 
             })
             .catch(function (error) {
