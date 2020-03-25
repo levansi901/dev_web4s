@@ -37,8 +37,8 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->applyMiddleware('csrf');
 
     // user
-    $builder->connect('/', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'login']);
-    $builder->connect('/login', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'login']);
+    $builder->connect('/', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'viewLogin']);
+    $builder->connect('/login', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'viewLogin']);
     $builder->connect('/user/list', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'viewListUsers']);
     $builder->connect('/user/list/:type', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'viewListUsers'], ['pass' => ['type']]);
 

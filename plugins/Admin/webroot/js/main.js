@@ -24,10 +24,9 @@ var app = new Vue({
     methods: {
         getUsers: function() {
             axios.get(_api_path + '/user/list')
-            .then(function (response) { 
-                console.log(response);
+            .then(function (response) {                
                 app.users = response.data;
-
+                console.log(response);
             })
             .catch(function (error) {
                 console.log(error);

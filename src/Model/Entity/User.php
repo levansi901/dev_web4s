@@ -8,19 +8,10 @@ use Cake\ORM\Entity;
 class User extends Entity
 {
 
-    protected $_accessible = [
-        'username' => true,
-        'email' => true,
-        'password' => true,
-        'created' => true,
-        'updated' => true,
-        'created_by' => true,
-        'status' => true,
-        'is_delete' => true
-    ];
-
     protected $_hidden = [
+        'role_id',
         'password',
+        'status',
         'is_delete'
     ];
 

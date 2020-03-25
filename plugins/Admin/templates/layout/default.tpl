@@ -31,5 +31,36 @@
 	</div>
 
 	<script src="{ADMIN_PATH}/js/main.js"></script>
+
+<!-- 	<script>    
+	    if (typeof _api_path == 'undefined') {
+	        var _api_path = '/api';
+	    }
+
+	    var app = new Vue({
+	        delimiters: ['[', ']'],
+	        el: '#nh-app',
+	        data: {
+	            users: []
+	        },
+	        mounted: function() {
+	            this.getUsers()
+	        },
+	        methods: {
+	            getUsers: function() {
+	                axios.get(_api_path + '/user/list')
+	                .then(function (response) {                
+	                    app.users = response.data;
+	                    console.log(response);
+	                })
+	                .catch(function (error) {
+	                    console.log(error);
+	                });
+	            },
+	            createUser: function() {},
+	            resetForm: function() {}
+	        }
+	    })
+	</script> -->
 </body>
 </html>

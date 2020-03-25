@@ -56,8 +56,7 @@ class Application extends BaseApplication
         }
 
         // Load more plugins here
-        $this->addPlugin('Admin', ['autoload' => true, 'routes' => true, 'bootstrap' => false]);
-        $this->addPlugin('Api', ['autoload' => true, 'routes' => true, 'bootstrap' => false]);
+        $this->addPlugin('Admin', ['autoload' => true, 'routes' => false, 'bootstrap' => false]);
 
     }
 

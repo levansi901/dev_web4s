@@ -14,15 +14,16 @@ class UserController extends ApiAppController {
     public function initialize(): void
     {
         parent::initialize();
-
         $this->loadModel('Users');
-
     }
 
     public function listUsers(){
-    	$users = $this->Users->getListUsers();
-        
-       	$this->set(compact('users'));
-		$this->set('_serialize', ['users']);
+    	$result = $this->Users->getListUsers();
+
+        exit(json_encode($result));
+        // $this->set([
+        //     'users' => $users,
+        //     '_serialize' => ['users']
+        // ]);        
     }
 }

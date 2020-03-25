@@ -68,7 +68,7 @@ class UsersTable extends Table
     public function getListUsers()
     {
         $table = TableRegistry::getTableLocator()->get('Users');
-        $list = $table->find('list', ['valueField' => 'full_name'])->order(['id' => 'DESC'])->toArray();
+        $list = $table->find()->order(['id' => 'DESC'])->toArray();
         return $list;
     }
 

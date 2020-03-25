@@ -3,15 +3,13 @@
         <th>Name</th>
         <th>Email</th>
         <th>Phone</th>
-        <th></th>
-        <th></th>
+        <th>Address</th>
     </tr>
-
     <tr v-for="user in users">
         <td>[user.full_name]</td>
-        <td>[user.full_name]</td>
-        <td>[user.full_name]</td>
-        <td>[user.full_name]</td>
-        <td>[user.full_name]</td>
+        <td>[user.email]</td>
+        <td>[user.phone]</td>
+        <td>[user.address]</td>
     </tr>
 </table>
+
