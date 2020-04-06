@@ -1,6 +1,5 @@
 <IfModule mod_rewrite.c>
-	RewriteEngine on
-    RewriteBase /
-	RewriteRule ^$ webroot/ [L]
-	RewriteRule (.*) webroot/$1 [L]
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
 </IfModule>

@@ -1,0 +1,221 @@
+msgid "tim_kiem"
+msgstr "Tìm kiếm"
+
+msgid "danh_sach"
+msgstr "Danh sách"
+
+msgid "da_chon"
+msgstr "Đã chọn"
+
+msgid "thay_doi_trang_thai"
+msgstr "Thay đổi trạng thái"
+
+msgid "hoat_dong"
+msgstr "Hoạt động"
+
+msgid "khong_hoat_dong"
+msgstr "Không hoạt động"
+
+msgid "xoa"
+msgstr "Xóa"
+
+msgid "cai_dat"
+msgstr "Cài đặt"
+
+msgid "giao_dien_website"
+msgstr "Giao diện Website"
+
+msgid "cai_dat_giao_dien"
+msgstr "Cài đặt giao diện"
+
+msgid "quan_ly_module"
+msgstr "Quản lý module"
+
+msgid "quan_ly_menu"
+msgstr "Quản lý Menu"
+
+msgid "tuy_chinh_giao_dien"
+msgstr "Tùy chỉnh giao diện"
+
+msgid "tuy_chinh_css"
+msgstr "Tùy chỉnh Css"
+
+msgid "tuy_chinh_javascript"
+msgstr "Tùy chỉnh Javascript"
+
+msgid "ma_nhung"
+msgstr "Mã nhúng"
+
+msgid "ban_hang"
+msgstr "Bán hàng"
+
+msgid "thuong_mai_dien_tu"
+msgstr "Thương mại điện tử"
+
+msgid "san_pham"
+msgstr "Sản phẩm"
+
+msgid "them_san_pham"
+msgstr "Thêm sản phẩm"
+
+msgid "danh_muc_san_pham"
+msgstr "Danh mục sản phẩm"
+
+msgid "danh_muc_bai_viet"
+msgstr "Danh mục bài viết"
+
+msgid "danh_muc"
+msgstr "Danh mục"
+
+msgid "them_danh_muc"
+msgstr "Thêm danh mục"
+
+msgid "thuong_hieu"
+msgstr "Thương hiệu"
+
+msgid "them_thuong_hieu"
+msgstr "Thêm thương hiệu"
+
+msgid "khuyen_mai"
+msgstr "Khuyến mãi"
+
+msgid "chuong_trinh_khuyen_mai"
+msgstr "Chương trình khuyến mãi"
+
+msgid "chuong_trinh_coupon"
+msgstr "Chương trình Coupon"
+
+msgid "ma_coupon"
+msgstr "Mã Coupon"
+
+msgid "don_hang"
+msgstr "Đơn hàng"
+
+msgid "them_don_hang"
+msgstr "Thêm đơn hàng"
+
+msgid "giao_dich_thanh_toan"
+msgstr "Giao dịch thanh toán"
+
+msgid "ban_giao_van_chuyen"
+msgstr "Bàn giao vận chuyển"
+
+msgid "bao_cao_don_hang"
+msgstr "Báo cáo đơn hàng"
+
+msgid "theo_ngay_thang"
+msgstr "Theo ngày tháng"
+
+msgid "theo_tinh_thanh"
+msgstr "Theo tỉnh thành"
+
+msgid "theo_gia_tri"
+msgstr "Theo giá trị"
+
+msgid "theo_nguon_don"
+msgstr "Theo nguồn đơn"
+
+msgid "tai_khoan"
+msgstr "Tài khoản"
+
+msgid "danh_sach_tai_khoan"
+msgstr "Danh sách tài khoản"
+
+msgid "them_tai_khoan"
+msgstr "Thêm tài khoản"
+
+msgid "nhom_quyen"
+msgstr "Nhóm quyền"
+
+msgid "phan_quyen"
+msgstr "Phân quyền"
+
+msgid "khach_hang"
+msgstr "Khách hàng"
+
+msgid "them_khach_hang"
+msgstr "Thêm khách hàng"
+
+msgid "quan_ly_bai_viet"
+msgstr "Quản lý bài viết"
+
+msgid "bai_viet"
+msgstr "Bài viết"
+
+msgid "danh_sach_bai_viet"
+msgstr "Danh sách bài viết"
+
+msgid "them_bai_viet"
+msgstr "Thêm bài viêt"
+
+msgid "cong_thanh_toan"
+msgstr "Cổng thanh toán"
+
+msgid "danh_sach_giao_dich"
+msgstr "Danh sách giao dịch"
+
+msgid "cai_dat_chung"
+msgstr "Cài đặt chung"
+
+msgid "thong_tin_website"
+msgstr "Thông tin Website"
+
+msgid "ngon_ngu"
+msgstr "Ngôn ngữ"
+
+msgid "van_chuyen"
+msgstr "Vận chuyển"
+
+msgid "hang_van_chuyen"
+msgstr "Hãng vận chuyển"
+
+msgid "mau_in"
+msgstr "Mẫu in"
+
+msgid "he_thong"
+msgstr "Hệ thống"
+
+msgid "xoa_cache"
+msgstr "Xóa Cache"
+
+msgid "bao_mat"
+msgstr "Bảo mật"
+
+msgid "ho_tro"
+msgstr "Hỗ trợ"
+
+msgid "ho_tro_khach_hang"
+msgstr "Hỗ trợ khách hàng"
+
+msgid "huong_dan_su_dung"
+msgstr "Hướng dẫn sử dụng"
+
+msgid "phan_hoi"
+msgstr "Phản hồi"
+
+msgid "thong_tin_goi_website"
+msgstr "Thông tin gói Website"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
