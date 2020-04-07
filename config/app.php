@@ -402,7 +402,7 @@ return [
     'Smarty' => [
         'error_reporting' => E_ALL & ~E_DEPRECATED,
         'force_compile' => false,
-        'caching' => true,
+        'caching' => false,
         'caching_time' => 30,
         'compile_check' => true
     ],

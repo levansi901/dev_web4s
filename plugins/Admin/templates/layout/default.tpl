@@ -6,7 +6,7 @@
 	<head>
 		<base href="">
 		<meta charset="utf-8" />
-		<title>Web4s | Dashboard</title>
+		<title>Web4s | {if !empty($title_for_layout)}{$title_for_layout}{else}Admin Control panel{/if}</title>
 		<meta name="description" content="Updates and statistics">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 

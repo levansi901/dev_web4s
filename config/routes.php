@@ -40,9 +40,12 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     // user
     $builder->connect('/', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'login']);
     $builder->connect('/login', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'login']);
-    $builder->connect('/user/list', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'list']);
-    $builder->connect('/user/list/:type', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'list'], ['pass' => ['type']]);
 
+    $builder->connect('/user', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'list']);
+    $builder->connect('/user/list', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'list']);
+    // $builder->connect('/user/:type', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'list'], ['pass' => ['type']]);
+    $builder->connect('/user/add', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'add']);
+    $builder->connect('/user/update/:id', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'update'], ['pass' => ['id'], 'id' => '[0-9]+']);
 
     $builder->fallbacks();
 });

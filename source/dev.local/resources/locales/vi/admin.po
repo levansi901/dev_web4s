@@ -19,6 +19,24 @@ msgstr "Không hoạt động"
 msgid "xoa"
 msgstr "Xóa"
 
+msgid "quay_lai"
+msgstr "Quay lại"
+
+msgid "them_moi"
+msgstr "Thêm mới"
+
+msgid "cap_nhat"
+msgstr "Cập nhật"
+
+msgid "luu_&_tiep_tuc"
+msgstr "Lưu &amp; tiếp tục"
+
+msgid "luu_&_them_moi"
+msgstr "Lưu &amp; thêm mới"
+
+msgid "luu_&_quay_lai"
+msgstr "Lưu &amp; quay lại"
+
 msgid "cai_dat"
 msgstr "Cài đặt"
 
@@ -123,6 +141,15 @@ msgstr "Danh sách tài khoản"
 
 msgid "them_tai_khoan"
 msgstr "Thêm tài khoản"
+
+msgid "cap_nhat_tai_khoan"
+msgstr "Cập nhật tài khoản"
+
+msgid "thong_tin_ca_nhan"
+msgstr "Thông tin cá nhân"
+
+msgid "doi_mat_khau"
+msgstr "Đổi mật khẩu"
 
 msgid "nhom_quyen"
 msgstr "Nhóm quyền"

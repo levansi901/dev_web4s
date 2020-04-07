@@ -522,7 +522,7 @@
                     <span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">       
                         <li class="kt-menu__item  kt-menu__item--submenu">
-                            <a href="{ADMIN_PATH}/user/list" class="kt-menu__link">
+                            <a href="{ADMIN_PATH}/user" class="kt-menu__link">
                                 <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                     <span></span>
                                 </i>

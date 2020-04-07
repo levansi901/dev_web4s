@@ -134,6 +134,7 @@ class SmartyView extends View
             $data = $this->viewVars;
         }
         $this->_current = $viewFile;
+        // debug($viewFile);
         $initialBlocks = count($this->Blocks->unclosed());
 
         $this->dispatchEvent('View.beforeRenderFile', [$viewFile]);
@@ -158,12 +159,13 @@ class SmartyView extends View
         if (isset($afterEvent->result)) {
             $content = $afterEvent->result;
         }
-
+        
+        // exit;
         if (isset($this->_parents[$viewFile])) {
             $this->_stack[] = $this->fetch('content');
             $this->assign('content', $content);
 
-            $content = $this->_render($this->_parents[$viewFile]);
+            $content = $this->_render($this->_parents[$viewFile]);            
             $this->assign('content', array_pop($this->_stack));
         }
 
@@ -174,7 +176,6 @@ class SmartyView extends View
                 $this->Blocks->active()
             ));
         }
-
         return $content;
     }
 }

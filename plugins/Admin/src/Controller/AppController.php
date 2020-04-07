@@ -12,19 +12,13 @@ class AppController extends Controller {
 
 	public function initialize(): void{
 	    parent::initialize();	   
-	    $this->loadComponent(
-            'RequestHandler', ['enableBeforeRedirect' => false]
-        );
 	}
 
 	public function beforeRender(EventInterface $event) {
-    	parent::beforeRender($event);
-
+        $this->viewBuilder()->setClassName('Smarty');
     	if (!$this->request->is('ajax')) {
-            $this->set('js_page', $this->js_page);
+            $this->set('js_page', !empty($this->js_page) ? $this->js_page : []);
         }
-
-    	$this->viewBuilder()->setClassName('Smarty');
 	}
 
 	public function responseJson($result = []){

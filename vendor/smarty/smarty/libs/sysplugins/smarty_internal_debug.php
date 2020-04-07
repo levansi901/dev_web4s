@@ -130,7 +130,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
      */
     public function start_render(Smarty_Internal_Template $template)
     {
-        $key = $this->get_key($template);
+        $key = $this->get_key($template);    
         $this->template_data[ $this->index ][ $key ][ 'start_time' ] = microtime(true);
     }
 
@@ -141,6 +141,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
      */
     public function end_render(Smarty_Internal_Template $template)
     {
+
         $key = $this->get_key($template);
         $this->template_data[ $this->index ][ $key ][ 'render_time' ] +=
             microtime(true) - @$this->template_data[ $this->index ][ $key ][ 'start_time' ];
