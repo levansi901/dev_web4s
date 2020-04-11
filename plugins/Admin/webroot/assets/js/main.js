@@ -3,15 +3,15 @@ String.prototype.replaceAll = function (search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-var ss_page = {
-	csrf_token: null,
-	cdn_url: null,
+var nhMain = {
+	csrfToken: null,
+	cdnUrl: null,
 	init: function(){
 		var self = this;
-		self.csrf_token = $('#csrf_token').val();
-    	self.cdn_url = $('#cdn_url').val();
+		self.csrfToken = $('#csrf_token').val();
+    	self.cdnUrl = $('#cdn_url').val();
 
-    	self.activeMenu();
+    	// self.activeMenu();
 
     	$(document).on('focus', '.auto-numeric, .phone-input', function(e) {
     		$(this).select();
@@ -20,11 +20,11 @@ var ss_page = {
 	activeMenu: function(){
 		var href = window.location.href.split(document.domain);
         var url = href[1];
-        var url_reference = $('body').attr('url-reference');
+        var urlReference = $('body').attr('url-reference');
         if ($('#left-sidebar a[href="' + url + '"]').length > 0) {
 	        a_active = $('#left-sidebar a[href="' + url + '"]');
-	    } else if (typeof(url_reference) != 'undefined' && $('#left-sidebar a[href="' + url_reference + '"]').length > 0) {
-	        a_active = $('#left-sidebar a[href="' + url_reference + '"]');
+	    } else if (typeof(urlReference) != 'undefined' && $('#left-sidebar a[href="' + urlReference + '"]').length > 0) {
+	        a_active = $('#left-sidebar a[href="' + urlReference + '"]');
 	    }
 	    
 	    if(typeof(a_active) != 'undefined'){
@@ -77,37 +77,37 @@ var ss_page = {
 	    var type = typeof(params.type) != 'undefined' ? params.type : 'success';
 		var title = typeof(params.title) != 'undefined' ? params.title : '';
 		var time = typeof(params.time) != 'undefined' ? params.time : 0;
-		var time_default = 0;
-		var icon, wrap_class = '';		
+		var timeDefault = 0;
+		var icon, wrapClass = '';		
 		switch(type){
 			case 'success':
-				wrap_class = 'green';
+				wrapClass = 'green';
 				icon = '<i class="material-icons m-r-lg">check</i>';
-				time_default = 500;
+				timeDefault = 500;
 			break;
 
 			case 'error':
-				wrap_class = 'red darken-2';
+				wrapClass = 'red darken-2';
 				icon = '<i class="material-icons m-r-lg">close</i>';
-				time_default = 3000;
+				timeDefault = 3000;
 			break;
 		}
 
 		if(time == 0){
-			time = time_default;
+			time = timeDefault;
 		}
 
-	    Materialize.toast(icon + title, time, wrap_class, callback);
+	    Materialize.toast(icon + title, time, wrapClass, callback);
 	},
 	ajaxSubmitForm: function(params = {}){
 		var self = this;
 	    var url = typeof(params.url) != 'undefined' ? params.url : '';	    
 	    var type = typeof(params.type) != 'undefined' ? params.type : 'POST';
-	    var type_data = typeof(params.type_data) != 'undefined' ? params.type_data : 'json';
+	    var typeData = typeof(params.typeData) != 'undefined' ? params.typeData : 'json';
 	    var data = typeof(params.data) != 'undefined' ? params.data : {};
 	    var async = typeof(params.async) != 'undefined' ? params.async : true;
-	    var url_redirect = typeof(params.url_redirect) != 'undefined' ? params.url_redirect : '';
-	    var after_save = typeof(params.after_save) != 'undefined' ? params.after_save : 'edit';
+	    var urlRedirect = typeof(params.urlRedirect) != 'undefined' ? params.urlRedirect : '';
+	    var isUpdate = typeof(params.isUpdate) != 'undefined' ? params.isUpdate : 'update';
 	    if(url.length == 0){
 	    	self.notification({
             	type: 'error',
@@ -117,12 +117,12 @@ var ss_page = {
 	    }
 		$.ajax({
 			headers: {
-		        'X-CSRF-Token': self.csrf_token
+		        'X-CSRF-Token': self.csrfToken
 		    },
 	        async: async,
 	        url: url,
 	        type: type,
-	        dataType: type_data,
+	        dataType: typeData,
 	        data: data,	        
 	        cache: false,
 	        processData: false,
@@ -133,16 +133,16 @@ var ss_page = {
         	var data = typeof(response.data) != 'undefined' ? response.data : {};
 
             if (success) {     
-            	if(typeof(data.id) != 'undefined' && after_save == 'edit' && url_redirect.length > 0){
-            		url_redirect = url_redirect + data.id
+            	if(typeof(data.id) != 'undefined' && isUpdate == 'update' && urlRedirect.length > 0){
+            		urlRedirect = urlRedirect + data.id
             	}
 
-            	if(typeof(data.id) == 'undefined' && after_save == 'edit' && url_redirect.length > 0){
-            		url_redirect = '';
+            	if(typeof(data.id) == 'undefined' && afterSave == 'update' && urlRedirect.length > 0){
+            		urlRedirect = '';
             	}
             	self.notification({title: message}, function(){
-            		if(url_redirect.length > 0){
-            			window.location.href = url_redirect;
+            		if(urlRedirect.length > 0){
+            			window.location.href = urlRedirect;
             		}else{
             			location.reload();
             		}
@@ -165,7 +165,7 @@ var ss_page = {
 		
 		var ajax = $.ajax({
 			headers: {
-		        'X-CSRF-Token': self.csrf_token
+		        'X-CSRF-Token': self.csrfToken
 		    },
 	        async: typeof(params.async) != 'undefined' ? params.async : true,
 	        url: typeof(params.url) != 'undefined' ? params.url : '',
@@ -175,7 +175,7 @@ var ss_page = {
 	        cache: typeof(params.cache) != 'undefined' ? params.cache : false,
 	    }).fail(function(jqXHR, textStatus, errorThrown){
 	    	if(typeof(params.not_show_error) == 'undefined'){
-	    		ss_page.notification({
+	    		nhMain.notification({
 			    	type: 'error',
 			    	title: errorThrown
 			    });
@@ -211,9 +211,9 @@ var ss_page = {
 		  	image_advtab: true ,
 		  	toolbar: 'formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link responsivefilemanager image | code | fullscreen',
 		  	filemanager_crossdomain: true,
-		  	external_filemanager_path: self.cdn_url + '/filemanager/',
+		  	external_filemanager_path: self.cdnUrl + '/filemanager/',
    			filemanager_title: 'CDN S-Sale',
-   			external_plugins: { 'filemanager' : self.cdn_url + '/filemanager/plugin.min.js'},
+   			external_plugins: { 'filemanager' : self.cdnUrl + '/filemanager/plugin.min.js'},
    			filemanager_access_key: typeof(params.filemanager_access_key) != 'undefined' ? params.filemanager_access_key : null
 		});
 	},
@@ -238,7 +238,7 @@ var ss_page = {
 				minChars: 0,
 			    source: function(keyword, suggest){
 			    	var data = $.extend({}, {keyword: keyword}, query);
-			    	ss_page.callAjax({
+			    	nhMain.callAjax({
 						url: url,
 						data: data
 					}).done(function(response) {
@@ -374,7 +374,7 @@ var ss_page = {
 	}
 }
 
-var ss_list = {
+var nhList = {
 	wrap_list: '#wrap-list',
 	wrap_filter: '#wrap-filter',
 	wrap_more_filter: '#wrap-more-filter',
@@ -499,7 +499,7 @@ var ss_list = {
 	    var url = typeof($(self.form).attr('action')) != 'undefined' ? $(self.form).attr('action') : '';
 	    url += url.length > 0 ? '?' + $.param(params) : '';
 
-		ss_page.callAjax({
+		nhMain.callAjax({
 			url: url,
 			data_type: 'html',
 			data: data
@@ -545,7 +545,7 @@ var ss_list = {
 
 
 $(document).ready(function() {
-	ss_page.init();
+	nhMain.init();
 });
 
 // $(document).ajaxStart(function () {

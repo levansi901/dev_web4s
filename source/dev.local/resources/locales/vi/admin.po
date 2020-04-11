@@ -37,6 +37,9 @@ msgstr "Lưu &amp; thêm mới"
 msgid "luu_&_quay_lai"
 msgstr "Lưu &amp; quay lại"
 
+msgid "lua_chon"
+msgstr "Lựa chọn"
+
 msgid "cai_dat"
 msgstr "Cài đặt"
 
@@ -150,6 +153,42 @@ msgstr "Thông tin cá nhân"
 
 msgid "doi_mat_khau"
 msgstr "Đổi mật khẩu"
+
+msgid "ten_dang_nhap"
+msgstr "Tên đăng nhập"
+
+msgid "mat_khau"
+msgstr "Mật khẩu"
+
+msgid "xac_nhan_mat_khau"
+msgstr "Xác nhận mật khẩu"
+
+msgid "ho_va_ten"
+msgstr "Họ và tên"
+
+msgid "ho_ten_day_du"
+msgstr "Họ tên đầy đủ"
+
+msgid "so_dien_thoai"
+msgstr "Số điện thoại"
+
+msgid "dia_chi"
+msgstr "Địa chỉ"
+
+msgid "ngay_sinh"
+msgstr "Ngày sinh"
+
+msgid "gioi_tinh"
+msgstr "Giới tính"
+
+msgid "nam"
+msgstr "Nam"
+
+msgid "nu"
+msgstr "Nữ"
+
+msgid "khac"
+msgstr "Khác"
 
 msgid "nhom_quyen"
 msgstr "Nhóm quyền"

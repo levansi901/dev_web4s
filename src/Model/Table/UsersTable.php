@@ -24,10 +24,10 @@ class UsersTable extends Table
             ]
         ]);
 
-        $this->belongsTo('Roles', [
-            'foreignKey' => 'role_id',
-            'joinType' => 'INNER'
-        ]);
+        // $this->belongsTo('Roles', [
+        //     'foreignKey' => 'role_id',
+        //     'joinType' => 'INNER'
+        // ]);
     }
 
     public function validationDefault(Validator $validator): Validator
