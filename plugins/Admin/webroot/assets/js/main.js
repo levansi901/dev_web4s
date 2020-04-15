@@ -107,7 +107,7 @@ var nhMain = {
 	    var data = typeof(params.data) != 'undefined' ? params.data : {};
 	    var async = typeof(params.async) != 'undefined' ? params.async : true;
 	    var urlRedirect = typeof(params.urlRedirect) != 'undefined' ? params.urlRedirect : '';
-	    var isUpdate = typeof(params.isUpdate) != 'undefined' ? params.isUpdate : 'update';
+	    var isUpdate = typeof(params.isUpdate) != 'undefined' ? parseInt(params.isUpdate) : 0;
 	    if(url.length == 0){
 	    	self.notification({
             	type: 'error',
@@ -128,16 +128,18 @@ var nhMain = {
 	        processData: false,
 	        contentType: false,
 	    }).done(function(response) {
+	    	KTApp.unprogress(btn);
+
 		   	var success = typeof(response.success) != 'undefined' ? response.success : false;
         	var message = typeof(response.message) != 'undefined' ? response.message : '';
         	var data = typeof(response.data) != 'undefined' ? response.data : {};
 
             if (success) {     
-            	if(typeof(data.id) != 'undefined' && isUpdate == 'update' && urlRedirect.length > 0){
+            	if(typeof(data.id) != 'undefined' && isUpdate == 1 && urlRedirect.length > 0){
             		urlRedirect = urlRedirect + data.id
             	}
 
-            	if(typeof(data.id) == 'undefined' && afterSave == 'update' && urlRedirect.length > 0){
+            	if(typeof(data.id) == 'undefined' && afterSave == 1 && urlRedirect.length > 0){
             		urlRedirect = '';
             	}
             	self.notification({title: message}, function(){

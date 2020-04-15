@@ -48,31 +48,29 @@ var nhUser = function () {
 			if (validator.form()) {
 				// See: src\js\framework\base\app.js
 				KTApp.progress(btn);
-				//KTApp.block(formEl);
-
-				// See: http://malsup.com/jquery/form/#ajaxSubmit
+				
 				var urlRedirect = $(this).data('link');
-				ss_page.ajaxSubmitForm({
+				nhMain.ajaxSubmitForm({
 	            	url: formEl.attr('action'),
-	            	data: new FormData(formEl),
-	            	url_redirect: urlRedirect,
-	            	after_save: after_save
+	            	data: new FormData(formEl[0]),
+	            	urlRedirect: urlRedirect,
+	            	isUpdate: $(this).data('is-update')
 	            });
 
-				ss_page.ajaxSubmitForm();
-				formEl.ajaxSubmit({
-					success: function() {
-						KTApp.unprogress(btn);
-						//KTApp.unblock(formEl);
+				// ss_page.ajaxSubmitForm();
+				// formEl.ajaxSubmit({
+				// 	success: function() {
+				// 		KTApp.unprogress(btn);
+				// 		KTApp.unblock(formEl);
 
-						swal.fire({
-							"title": "",
-							"text": "The application has been successfully submitted!",
-							"type": "success",
-							"confirmButtonClass": "btn btn-secondary"
-						});
-					}
-				});
+				// 		swal.fire({
+				// 			"title": "",
+				// 			"text": "The application has been successfully submitted!",
+				// 			"type": "success",
+				// 			"confirmButtonClass": "btn btn-secondary"
+				// 		});
+				// 	}
+				// });
 			}
 		});
 	}

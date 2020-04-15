@@ -12,7 +12,7 @@
 
 <!-- begin:: Content -->
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-    <form id="main-form" action="" method="POST">
+    <form id="main-form" action="{ADMIN_PATH}/user" method="POST">
 
         <div class="kt-portlet">
             <div class="kt-portlet__head">

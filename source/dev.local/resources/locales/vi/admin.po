@@ -262,6 +262,11 @@ msgstr "Phản hồi"
 msgid "thong_tin_goi_website"
 msgstr "Thông tin gói Website"
 
+msgid "xu_ly_du_lieu_thanh_cong"
+msgstr "Xử lý dữ liệu thành công"
+
+msgid "loi_xu_ly_du_lieu"
+msgstr "Lỗi xử lý dữ liệu"
 
 
 

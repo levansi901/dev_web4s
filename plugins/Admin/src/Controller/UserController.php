@@ -5,6 +5,8 @@ namespace Admin\Controller;
 use Admin\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cake\Http\Response;
+use Cake\ORM\Query;
 
 class UserController extends AppController {
 
@@ -41,5 +43,26 @@ class UserController extends AppController {
 
     public function update($id = null){
         $this->set('title_for_layout', __d('admin', 'cap_nhat_tai_khoan'));
+    }
+
+    public function save($id = null){
+        $this->layout = false;
+        $this->autoRender = false;
+
+        $result = [];
+        $data = $this->getRequest()->getData();
+        if ($this->getRequest()->is('post') && !empty($data)) {
+            $question = $this->User->newEmptyEntity();
+            $question = $this->User->patchEntity($question, $data);
+
+            $save = $this->User->save($question);
+            if(!empty($save['User']['id'])){
+
+            }else{
+                
+            }
+        }
+
+        $this->responseJson($result);
     }
 }

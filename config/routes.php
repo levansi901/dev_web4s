@@ -46,6 +46,7 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     // $builder->connect('/user/:type', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'list'], ['pass' => ['type']]);
     $builder->connect('/user/add', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'add']);
     $builder->connect('/user/update/:id', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'update'], ['pass' => ['id'], 'id' => '[0-9]+']);
+    $builder->connect('/user/save', ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'save']);
 
     $builder->fallbacks();
 });
