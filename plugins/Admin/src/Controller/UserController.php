@@ -51,18 +51,29 @@ class UserController extends AppController {
 
         $result = [];
         $data = $this->getRequest()->getData();
-        if ($this->getRequest()->is('post') && !empty($data)) {
-            $question = $this->User->newEmptyEntity();
-            $question = $this->User->patchEntity($question, $data);
 
-            $save = $this->User->save($question);
-            if(!empty($save['User']['id'])){
-
-            }else{
-                
-            }
+        if (!$this->getRequest()->is('post')) {
+            $this->resError([MESSAGE => __d('admin', 'phuong_thuc_khong_hop_le')]);
         }
 
-        $this->responseJson($result);
+        if (empty($data)) {
+            $this->resError([MESSAGE => __d('admin', 'du_lieu_khong_hop_le')]);
+        }
+
+        $user = $this->Users->newEmptyEntity();
+        $user = $this->Users->patchEntity($user, $data);
+        debug($user);
+        exit;
+        $save = $this->User->save($user);
+        if(!empty($save['User']['id'])){
+            $this->resSuccess([DATA => ['id' => $save['User']['id']]]);
+        }else{
+            if($save->errors()){
+                $utilities_component = $this->loadComponent('Utilities');
+                $list_errors = $utilities_component->errorModel($save->errors());                
+            }
+            $this->resError([MESSAGE => !empty($list_errors[0]) ? !empty($list_errors[0]) : null]);
+        }
+
     }
 }

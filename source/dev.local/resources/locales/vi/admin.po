@@ -262,14 +262,23 @@ msgstr "Phản hồi"
 msgid "thong_tin_goi_website"
 msgstr "Thông tin gói Website"
 
+msgid "cap_nhat_thanh_cong"
+msgstr "Cập nhật thành công"
+
+msgid "cap_nhat_khong_thanh_cong"
+msgstr "Cập nhật không thành công"
+
 msgid "xu_ly_du_lieu_thanh_cong"
 msgstr "Xử lý dữ liệu thành công"
 
 msgid "loi_xu_ly_du_lieu"
 msgstr "Lỗi xử lý dữ liệu"
 
+msgid "phuong_thuc_khong_hop_le"
+msgstr "Phương thức không hợp lệ"
 
-
+msgid "du_lieu_khong_hop_le"
+msgstr "Dữ liệu không hợp lệ"
 
 
 

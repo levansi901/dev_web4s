@@ -140,9 +140,9 @@
 		</ul>
 
 		<!-- end::Sticky Toolbar -->
-
+		
 		<!-- begin::Input hidden -->
-		<input type="hidden" id="csrf_token" value="{if !empty($csrf_token)}{$csrf_token}{/if}">
+		<input type="hidden" id="csrf_token" value="{$this->getRequest()->getAttribute('csrfToken')}">
 		<!-- end::Input hidden -->
 		
 		<!--begin::Global Theme Bundle(used by all pages) -->
@@ -162,7 +162,7 @@
 	        {foreach from = $js_page item = js_file}
 	            <script src="{ADMIN_PATH}{$js_file}" type="text/javascript"></script>
 	        {/foreach}
-	    {/if}    		
+	    {/if}
 
 		<!--end::Page Scripts -->
 	</body>

@@ -70,35 +70,6 @@ var nhMain = {
 
 		});
 	},
-	notification: function(params = {}, callback){
-		if (typeof(callback) != 'function') {
-	        callback = function () {};
-	    }
-	    var type = typeof(params.type) != 'undefined' ? params.type : 'success';
-		var title = typeof(params.title) != 'undefined' ? params.title : '';
-		var time = typeof(params.time) != 'undefined' ? params.time : 0;
-		var timeDefault = 0;
-		var icon, wrapClass = '';		
-		switch(type){
-			case 'success':
-				wrapClass = 'green';
-				icon = '<i class="material-icons m-r-lg">check</i>';
-				timeDefault = 500;
-			break;
-
-			case 'error':
-				wrapClass = 'red darken-2';
-				icon = '<i class="material-icons m-r-lg">close</i>';
-				timeDefault = 3000;
-			break;
-		}
-
-		if(time == 0){
-			time = timeDefault;
-		}
-
-	    Materialize.toast(icon + title, time, wrapClass, callback);
-	},
 	ajaxSubmitForm: function(params = {}){
 		var self = this;
 	    var url = typeof(params.url) != 'undefined' ? params.url : '';	    
@@ -142,24 +113,13 @@ var nhMain = {
             	if(typeof(data.id) == 'undefined' && afterSave == 1 && urlRedirect.length > 0){
             		urlRedirect = '';
             	}
-            	self.notification({title: message}, function(){
-            		if(urlRedirect.length > 0){
-            			window.location.href = urlRedirect;
-            		}else{
-            			location.reload();
-            		}
-            	});
+
+            	toastr.info('Cập nhật thành công');
             } else {
-                self.notification({
-                	type: 'error',
-                	title: message
-                });
+            	toastr.error('Cập nhật không thành công');
             }
 		}).fail(function(jqXHR, textStatus, errorThrown) {
-		    self.notification({
-            	type: 'error',
-            	title: textStatus + ': ' + errorThrown
-            });
+			toastr.error(textStatus + ': ' + errorThrown);
 		});
 	},
 	callAjax: function(params = {}){

@@ -30,7 +30,7 @@ var nhUser = function () {
 
 			// Display error
 			invalidHandler: function(event, validator) {
-				// KTUtil.scrollTop();
+				
 			},
 
 			// Submit valid form
@@ -45,10 +45,11 @@ var nhUser = function () {
 		// var btn_save = $('#btn-save');
 		btn.on('click', function(e) {
 			e.preventDefault();
+
 			if (validator.form()) {
 				// See: src\js\framework\base\app.js
 				KTApp.progress(btn);
-				
+
 				var urlRedirect = $(this).data('link');
 				nhMain.ajaxSubmitForm({
 	            	url: formEl.attr('action'),
@@ -56,21 +57,6 @@ var nhUser = function () {
 	            	urlRedirect: urlRedirect,
 	            	isUpdate: $(this).data('is-update')
 	            });
-
-				// ss_page.ajaxSubmitForm();
-				// formEl.ajaxSubmit({
-				// 	success: function() {
-				// 		KTApp.unprogress(btn);
-				// 		KTApp.unblock(formEl);
-
-				// 		swal.fire({
-				// 			"title": "",
-				// 			"text": "The application has been successfully submitted!",
-				// 			"type": "success",
-				// 			"confirmButtonClass": "btn btn-secondary"
-				// 		});
-				// 	}
-				// });
 			}
 		});
 	}

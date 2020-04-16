@@ -3,12 +3,17 @@ namespace Admin;
 
 use Cake\Core\BasePlugin;
 use Cake\Core\PluginApplicationInterface;
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
 
 class Plugin extends BasePlugin {
 
     public function middleware($middleware){
         // Add middleware here.
         $middleware = parent::middleware($middleware);
+
+        $csrf = new CsrfProtectionMiddleware(); 
+        $middleware->add($csrf);
+
         return $middleware;
     }
 

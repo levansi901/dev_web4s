@@ -12,7 +12,7 @@
 
 <!-- begin:: Content -->
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-    <form id="main-form" action="{ADMIN_PATH}/user" method="POST">
+    <form id="main-form" action="{ADMIN_PATH}/user/save" method="POST">
 
         <div class="kt-portlet">
             <div class="kt-portlet__head">
@@ -100,7 +100,7 @@
                     <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
                     <div class="col-lg-9 col-xl-6">
                         <div class="kt-avatar kt-avatar--outline kt-avatar--circle-" id="kt_user_edit_avatar">
-                            <div class="kt-avatar__holder" style="background-image: url('assets/media/users/300_20.jpg');"></div>
+                            <div class="kt-avatar__holder"></div>
                             <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
                                 <i class="fa fa-pen"></i>
                                 <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
