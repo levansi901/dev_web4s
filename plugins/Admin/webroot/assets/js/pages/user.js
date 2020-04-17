@@ -12,20 +12,20 @@ var nhUser = function () {
 
 			// Validation rules
 			rules: {
-				username: {
-					required: true
-				},
-				full_name: {
-					required: true
-				},
-				email: {
-					required: true,
-					email: true
-				},
-				password: {
-				required: true,
+				// username: {
+				// 	required: true
+				// },
+				// full_name: {
+				// 	required: true
+				// },
+				// email: {
+				// 	required: true,
+				// 	email: true
+				// },
+				// password: {
+				// required: true,
 					
-				}
+				// }
 			},
 
 			// Display error

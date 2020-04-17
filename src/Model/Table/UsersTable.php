@@ -6,6 +6,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
+use App\Model\Behavior\UnixTimestampBehavior;
+use Cake\ORM\Rule\IsUnique;
 
 class UsersTable extends Table
 {
@@ -16,19 +18,19 @@ class UsersTable extends Table
 
         $this->setDisplayField('full_name');
 
-        $this->addBehavior('Timestamp', [
+        $this->addBehavior('UnixTimestamp', [
             'events' => [
                 'Model.beforeSave' => [
                     'created' => 'new',
-                    'updated' => 'always'
+                    'updated' => 'existing'
                 ]
             ]
         ]);
 
-        // $this->belongsTo('Roles', [
-        //     'foreignKey' => 'role_id',
-        //     'joinType' => 'INNER'
-        // ]);
+        $this->belongsTo('Roles', [
+            'foreignKey' => 'role_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     public function validationDefault(Validator $validator): Validator
@@ -58,19 +60,28 @@ class UsersTable extends Table
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->isUnique(['username']));
-        $rules->add($rules->isUnique(['email']));
-
-        return $rules;
-    }
-
     public function getListUsers()
     {
         $table = TableRegistry::getTableLocator()->get('Users');
         $list = $table->find()->order(['id' => 'DESC'])->toArray();
         return $list;
+    }
+
+    public function checkExistEmail($email = null){
+        if(empty($email)) return false;
+
+        $table = TableRegistry::getTableLocator()->get('Users');
+        $user = $table->find()->where(['email' => $email, 'is_delete' => 0])->first();
+
+        return !empty($user->id) ? true : false;
+    }
+
+    public function checkExistUsername($username = null){
+        if(empty($username)) return false;
+
+        $table = TableRegistry::getTableLocator()->get('Users');
+        $user = $table->find()->where(['username' => $username, 'is_delete' => 0])->first();
+        return !empty($user->id) ? true : false;
     }
 
 }

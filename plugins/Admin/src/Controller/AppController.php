@@ -21,25 +21,26 @@ class AppController extends Controller {
         }
 	}
 
-    protected function resSuccess($params = []) {
+    protected function responseJson($params = []) {
+        $code = ERROR;
+        if(!empty($params[CODE]) && in_array($params[CODE], [SUCCESS, ERROR])){
+            $code = $params[CODE];
+        }
+
+        $message = !empty($params[MESSAGE]) ? $params[MESSAGE] : null;
+        if(empty($params[MESSAGE]) && $code == ERROR){
+            $message = __d('admin', 'cap_nhat_khong_thanh_cong');
+        }
+
+        if(empty($params[MESSAGE]) && $code == SUCCESS){
+            $message = __d('admin', 'cap_nhat_thanh_cong');
+        }
+        
         $result = [
-            CODE => SUCCESS,
-            MESSAGE => !empty($params[MESSAGE]) ? $params[MESSAGE] : __d('admin', 'cap_nhat_thanh_cong'),
+            CODE => $code,
+            MESSAGE => $message,
             DATA => !empty($params[DATA]) ? $params[DATA] : []
         ];        
-        $this->response->type('json');
-        $this->response->body(json_encode($result));
-        return $this->response;
+        exit(json_encode($result));
     }
-
-    protected function resError($params = []) {
-        $result = [
-            CODE => ERROR,
-            MESSAGE => !empty($params[MESSAGE]) ? $params[MESSAGE] : __d('admin', 'cap_nhat_khong_thanh_cong')
-        ];        
-        $this->response->type('json');
-        $this->response->body(json_encode($result));
-        return $this->response;
-    }
-
 }

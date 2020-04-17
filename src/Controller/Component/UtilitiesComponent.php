@@ -8,13 +8,14 @@ class UtilitiesComponent extends Component
     public function errorModel($list_errors = [])
     {
         $result = [];
-        foreach($save->errors() as $errors){
+        if(empty($list_errors)) return [];
+        foreach($list_errors as $key => $errors){
             if(is_array($errors)){
                 foreach($errors as $error){
-                    $result[] = $error;
+                    $result[] = $key . ' - ' . $error;
                 }
             }else{
-                $result[] = $errors;
+                $result[] = $key . ' - ' . $error;
             }
         }
         return $result;

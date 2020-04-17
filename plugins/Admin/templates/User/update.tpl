@@ -18,7 +18,7 @@
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">                        
-                        {__d('admin', 'tai_khoan')}
+                        {__d('admin', 'thong_tin_tai_khoan')}
                     </h3>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                             <div class="kt-avatar__holder"></div>
                             <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
                                 <i class="fa fa-pen"></i>
-                                <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
+                                <input type="file" accept=".png, .jpg, .jpeg">
                             </label>
                             <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
                                 <i class="fa fa-times"></i>

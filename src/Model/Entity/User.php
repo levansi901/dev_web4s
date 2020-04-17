@@ -5,7 +5,7 @@ namespace App\Model\Entity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
-class User extends Entity
+class Users extends Entity
 {
 
     protected $_hidden = [

@@ -148,6 +148,9 @@ msgstr "Thêm tài khoản"
 msgid "cap_nhat_tai_khoan"
 msgstr "Cập nhật tài khoản"
 
+msgid "thong_tin_tai_khoan"
+msgstr "Thông tin tài khoản"
+
 msgid "thong_tin_ca_nhan"
 msgstr "Thông tin cá nhân"
 
@@ -280,8 +283,11 @@ msgstr "Phương thức không hợp lệ"
 msgid "du_lieu_khong_hop_le"
 msgstr "Dữ liệu không hợp lệ"
 
+msgid "ten_dang_nhap_da_ton_tai_tren_he_thong"
+msgstr "Tên đăng nhập đã tồn tại trên hệ thống"
 
-
+msgid "email_da_ton_tai_tren_he_thong"
+msgstr "Email đã tồn tại trên hệ thống"
 
 
 
