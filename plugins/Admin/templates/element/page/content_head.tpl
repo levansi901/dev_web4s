@@ -28,8 +28,8 @@
                             </span>
                         </li>
 
-                        <li class="kt-nav__item btn-save">
-                            <span data-link="{$url_add}" class="kt-nav__link">
+                        <li class="kt-nav__item">
+                            <span data-link="{$url_add}" class="kt-nav__link btn-save">
                                 <i class="kt-nav__link-icon flaticon2-medical-records"></i>
                                 <span class="kt-nav__link-text">
                                     {__d('admin', 'luu_&_them_moi')}
@@ -37,8 +37,8 @@
                             </span>
                         </li>
 
-                        <li class="kt-nav__item btn-save">
-                            <span data-link="{$url_list}" class="kt-nav__link">
+                        <li class="kt-nav__item">
+                            <span data-link="{$url_list}" class="kt-nav__link btn-save">
                                 <i class="kt-nav__link-icon flaticon2-hourglass-1"></i>
                                 <span class="kt-nav__link-text">
                                     {__d('admin', 'luu_&_quay_lai')}

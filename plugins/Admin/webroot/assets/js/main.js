@@ -3,6 +3,21 @@ String.prototype.replaceAll = function (search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
+var _SUCCESS = 'success';
+var _ERROR = 'error';
+var _MESSAGE = 'message';
+var _DATA = 'data';
+var _LANG = 'lang';
+var _UNDEFINED = 'undefined';
+
+var blockOptions = {
+    overlayColor: '#000000',
+    type: 'v2',
+    state: 'success',
+    message: locales.vui_long_cho + '...'
+}
+
+
 var nhMain = {
 	csrfToken: null,
 	cdnUrl: null,
@@ -17,17 +32,79 @@ var nhMain = {
     		$(this).select();
     	});    
 	},
+	ajaxSubmitForm: function(params = {}, callback){
+
+		if (typeof(callback) != 'function') {
+	        callback = function () {};
+	    }
+
+		var self = this;
+	    var url = typeof(params.url) != _UNDEFINED ? params.url : '';	    
+	    var type = typeof(params.type) != _UNDEFINED ? params.type : 'POST';
+	    var dataType = typeof(params.dataType) != _UNDEFINED ? params.dataType : 'json';
+	    var data = typeof(params.data) != _UNDEFINED ? params.data : {};
+	    var async = typeof(params.async) != _UNDEFINED ? params.async : true;
+	    var cache = typeof(params.cache) != _UNDEFINED ? params.cache : false;
+	    var processData = typeof(params.processData) != _UNDEFINED ? params.processData : true;
+	    var contentType = typeof(params.contentType) != _UNDEFINED ? params.contentType : true;
+	    if(url.length == 0){
+	    	self.notification({
+            	type: 'error',
+            	title: 'Đường dẫn thực thi không hợp lệ'
+            });
+            return false;
+	    }
+		$.ajax({
+			headers: {
+		        'X-CSRF-Token': self.csrfToken
+		    },
+	        async: async,
+	        url: url,
+	        type: type,
+	        dataType: dataType,
+	        data: data,	        
+	        cache: cache,
+	        processData: processData,
+	        contentType: contentType,
+	    }).done(function(response) {
+	    	callback(response);
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			toastr.error(textStatus + ': ' + errorThrown);
+		});
+	},
+	callAjax: function(params = {}){
+		var self = this;
+		
+		var ajax = $.ajax({
+			headers: {
+		        'X-CSRF-Token': self.csrfToken
+		    },
+	        async: typeof(params.async) != _UNDEFINED ? params.async : true,
+	        url: typeof(params.url) != _UNDEFINED ? params.url : '',
+	        type: typeof(params.type) != _UNDEFINED ? params.type : 'POST',
+	        dataType: typeof(params.dataType) != _UNDEFINED ? params.dataType : 'json',
+	        data: typeof(params.data) != _UNDEFINED ? params.data : {},    
+	        cache: typeof(params.cache) != _UNDEFINED ? params.cache : false,
+	        processData : typeof(params.processData) != _UNDEFINED ? params.processData : false,
+	    	contentType : typeof(params.contentType) != _UNDEFINED ? params.contentType : false
+	    }).fail(function(jqXHR, textStatus, errorThrown){
+	    	if(typeof(params.not_show_error) == _UNDEFINED){
+	    		toastr.error(textStatus + ': ' + errorThrown);
+	    	}			
+		});
+	    return ajax;
+	},	
 	activeMenu: function(){
 		var href = window.location.href.split(document.domain);
         var url = href[1];
         var urlReference = $('body').attr('url-reference');
         if ($('#left-sidebar a[href="' + url + '"]').length > 0) {
 	        a_active = $('#left-sidebar a[href="' + url + '"]');
-	    } else if (typeof(urlReference) != 'undefined' && $('#left-sidebar a[href="' + urlReference + '"]').length > 0) {
+	    } else if (typeof(urlReference) != _UNDEFINED && $('#left-sidebar a[href="' + urlReference + '"]').length > 0) {
 	        a_active = $('#left-sidebar a[href="' + urlReference + '"]');
 	    }
 	    
-	    if(typeof(a_active) != 'undefined'){
+	    if(typeof(a_active) != _UNDEFINED){
 	    	a_active.addClass('active-page');	
 	    	// active menu
 		    var ul_collasible_body = a_active.closest('.collapsible-body');
@@ -41,10 +118,10 @@ var nhMain = {
 	        callback = function () {};
 	    }
 
-		var type = typeof(params.type) != 'undefined' ? params.type : 'warning';
-		var title = typeof(params.title) != 'undefined' ? params.title : '';
-		var text = typeof(params.text) != 'undefined' ? params.text : '';		
-		var reason_validation = typeof(params.reason_validation) != 'undefined' ? params.reason_validation : 'Vui lòng nhập lý do xóa';
+		var type = typeof(params.type) != _UNDEFINED ? params.type : 'warning';
+		var title = typeof(params.title) != _UNDEFINED ? params.title : '';
+		var text = typeof(params.text) != _UNDEFINED ? params.text : '';		
+		var reason_validation = typeof(params.reason_validation) != _UNDEFINED ? params.reason_validation : 'Vui lòng nhập lý do xóa';
 
 		swal({   
 		    title: title,   
@@ -70,81 +147,6 @@ var nhMain = {
 
 		});
 	},
-	ajaxSubmitForm: function(params = {}){
-		var self = this;
-	    var url = typeof(params.url) != 'undefined' ? params.url : '';	    
-	    var type = typeof(params.type) != 'undefined' ? params.type : 'POST';
-	    var typeData = typeof(params.typeData) != 'undefined' ? params.typeData : 'json';
-	    var data = typeof(params.data) != 'undefined' ? params.data : {};
-	    var async = typeof(params.async) != 'undefined' ? params.async : true;
-	    var urlRedirect = typeof(params.urlRedirect) != 'undefined' ? params.urlRedirect : '';
-	    var isUpdate = typeof(params.isUpdate) != 'undefined' ? parseInt(params.isUpdate) : 0;
-	    if(url.length == 0){
-	    	self.notification({
-            	type: 'error',
-            	title: 'Đường dẫn thực thi không hợp lệ'
-            });
-            return false;
-	    }
-		$.ajax({
-			headers: {
-		        'X-CSRF-Token': self.csrfToken
-		    },
-	        async: async,
-	        url: url,
-	        type: type,
-	        dataType: typeData,
-	        data: data,	        
-	        cache: false,
-	        processData: false,
-	        contentType: false,
-	    }).done(function(response) {
-	    	KTApp.unprogress(btn);
-
-		   	var success = typeof(response.success) != 'undefined' ? response.success : false;
-        	var message = typeof(response.message) != 'undefined' ? response.message : '';
-        	var data = typeof(response.data) != 'undefined' ? response.data : {};
-
-            if (success) {     
-            	if(typeof(data.id) != 'undefined' && isUpdate == 1 && urlRedirect.length > 0){
-            		urlRedirect = urlRedirect + data.id
-            	}
-
-            	if(typeof(data.id) == 'undefined' && afterSave == 1 && urlRedirect.length > 0){
-            		urlRedirect = '';
-            	}
-
-            	toastr.info('Cập nhật thành công');
-            } else {
-            	toastr.error('Cập nhật không thành công');
-            }
-		}).fail(function(jqXHR, textStatus, errorThrown) {
-			toastr.error(textStatus + ': ' + errorThrown);
-		});
-	},
-	callAjax: function(params = {}){
-		var self = this;
-		
-		var ajax = $.ajax({
-			headers: {
-		        'X-CSRF-Token': self.csrfToken
-		    },
-	        async: typeof(params.async) != 'undefined' ? params.async : true,
-	        url: typeof(params.url) != 'undefined' ? params.url : '',
-	        type: typeof(params.type) != 'undefined' ? params.type : 'POST',
-	        dataType: typeof(params.data_type) != 'undefined' ? params.data_type : 'JSON',
-	        data: typeof(params.data) != 'undefined' ? params.data : {},    
-	        cache: typeof(params.cache) != 'undefined' ? params.cache : false,
-	    }).fail(function(jqXHR, textStatus, errorThrown){
-	    	if(typeof(params.not_show_error) == 'undefined'){
-	    		nhMain.notification({
-			    	type: 'error',
-			    	title: errorThrown
-			    });
-	    	}			
-		});
-	    return ajax;
-	},	
 	shortcut: function(){
 		$(document).on('keydown', function (e) {
 		    var shortcut = e.keyCode;
@@ -176,7 +178,7 @@ var nhMain = {
 		  	external_filemanager_path: self.cdnUrl + '/filemanager/',
    			filemanager_title: 'CDN S-Sale',
    			external_plugins: { 'filemanager' : self.cdnUrl + '/filemanager/plugin.min.js'},
-   			filemanager_access_key: typeof(params.filemanager_access_key) != 'undefined' ? params.filemanager_access_key : null
+   			filemanager_access_key: typeof(params.filemanager_access_key) != _UNDEFINED ? params.filemanager_access_key : null
 		});
 	},
 	autoCompleteBasic: function(params = {}, callback){
@@ -184,11 +186,11 @@ var nhMain = {
 	        callback = function () {};
 	    }
 
-	    var input_suggest = typeof(params.input_suggest) != 'undefined' ? params.input_suggest : '';
-	    var input_value_id = typeof(params.input_value_id) != 'undefined' ? params.input_value_id : '';
-	    var url = typeof(params.url) != 'undefined' ? params.url : '';
-	    var label_field = typeof(params.label_field) != 'undefined' ? params.label_field : '';
-	    var query = typeof(params.query) != 'undefined' ? params.query : {};
+	    var input_suggest = typeof(params.input_suggest) != _UNDEFINED ? params.input_suggest : '';
+	    var input_value_id = typeof(params.input_value_id) != _UNDEFINED ? params.input_value_id : '';
+	    var url = typeof(params.url) != _UNDEFINED ? params.url : '';
+	    var label_field = typeof(params.label_field) != _UNDEFINED ? params.label_field : '';
+	    var query = typeof(params.query) != _UNDEFINED ? params.query : {};
 
 	    if(input_suggest.length > 0 && url.length > 0){
 
@@ -210,24 +212,24 @@ var nhMain = {
 			    renderItem: function (item, search){
 			        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 			        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-			        var id = typeof(item.id) != 'undefined' ? item.id : '';
-			        var name = typeof(item.name) != 'undefined' ? item.name : '';
+			        var id = typeof(item.id) != _UNDEFINED ? item.id : '';
+			        var name = typeof(item.name) != _UNDEFINED ? item.name : '';
 			        
 			        if(label_field.length > 0 && label_field != 'name'){
-			        	name = typeof(item[label_field]) != 'undefined' ? item[label_field] : '';
+			        	name = typeof(item[label_field]) != _UNDEFINED ? item[label_field] : '';
 			        }
 			        
 			        return '<div class="autocomplete-suggestion single-suggestion" data-name="' +  name + '" data-id="' + id + '">' + name.replace(re, "<b>$1</b>") + '</div>';
 			    },
 			    onSelect: function(e, term, item){
 			    	$(input_suggest).val(item.data('name'));
-			    	if(typeof(input_value_id) != 'undefined' && input_value_id.length > 0){
+			    	if(typeof(input_value_id) != _UNDEFINED && input_value_id.length > 0){
 			    		$(input_value_id).val(item.data('id'));
 			    	}
 			    }
 			});
 
-			if(typeof(input_value_id) != 'undefined' && input_value_id.length > 0){
+			if(typeof(input_value_id) != _UNDEFINED && input_value_id.length > 0){
 				$(document).on('change', input_suggest, function(e) {								
 					$(input_value_id).val('');	    		
 				});
@@ -255,15 +257,15 @@ var nhMain = {
 			});
 		},
 		showError: function(params = {}, callback){
-			var input = typeof(params.input_object) != 'undefined' ? params.input_object : null;
-			var error_message = typeof(params.error_message) != 'undefined' ? params.error_message : null;	
+			var input = typeof(params.input_object) != _UNDEFINED ? params.input_object : null;
+			var error_message = typeof(params.error_message) != _UNDEFINED ? params.error_message : null;	
 
 			if(input.length > 0 && error_message.length > 0){
 				input.next('label.error').remove();
 				if (typeof(callback) != 'function') {
 			        callback = function () {};
 			    }
-				var id = typeof(input.attr('id')) != 'undefined' ? input.attr('id') + '-error' : '';
+				var id = typeof(input.attr('id')) != _UNDEFINED ? input.attr('id') + '-error' : '';
 				var error = '<label id="' + id + '" class="error" for="' + id + '">' + error_message + '</label>';
 				input.after(error).focus();
 				callback();
@@ -277,13 +279,13 @@ var nhMain = {
 	},
 	utilities: {
 		parseNumberToTextMoney: function(number = null){
-			if (typeof(number) != 'number' || isNaN(number) || typeof(number) == 'undefined') {
+			if (typeof(number) != 'number' || isNaN(number) || typeof(number) == _UNDEFINED) {
 		        return 0;
 		    }	    
 	    	return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 		},
 		parseTextMoneyToNumber: function(text_number = null){
-			if (typeof(text_number) == 'undefined') {
+			if (typeof(text_number) == _UNDEFINED) {
 		        return 0;
 		    }
 
@@ -291,7 +293,7 @@ var nhMain = {
 			return number;
 		},
 		parseFloat: function(number = null){
-			if (isNaN(number) || typeof(number) == 'undefined' || number == null) {
+			if (isNaN(number) || typeof(number) == _UNDEFINED || number == null) {
 		        return 0;
 		    }	
 
@@ -302,7 +304,7 @@ var nhMain = {
 		    return number;
 		},
 		parseInt: function(number = null){
-			if (isNaN(number) || typeof(number) == 'undefined' || number == null) {
+			if (isNaN(number) || typeof(number) == _UNDEFINED || number == null) {
 		        return 0;
 		    }	
 
@@ -311,7 +313,41 @@ var nhMain = {
 		        return 0;
 		    }
 		    return number;
-		}
+		},
+		dateOnkeyup: function(d, e){
+			var pK = (e.which) ? e.which : window.event.keyCode;
+		    if (pK == 8) {
+		        return;
+		    }
+		    var dt = d.value;
+		    var da = dt.split('/');
+		    for (var a = 0; a < da.length; a++) {
+		        if (da[a] != +da[a]) da[a] = da[a].substr(0, da[a].length - 1);
+		    }
+		    if (da[0] > 31) {
+		        da[1] = da[0].substr(da[0].length - 1, 1);
+		        da[0] = '0' + da[0].substr(0, da[0].length - 1);
+		    }
+		    if (da[1] > 12) {
+		        da[2] = da[1].substr(da[1].length - 1, 1);
+		        da[1] = '0' + da[1].substr(0, da[1].length - 1);
+		    }
+		    if (da[2] > 9999) da[2] = da[2].substr(0, da[2].length - 1);
+		    if (da[0] > 28 & da[1] == 02 & da[2] > 999) {
+		        if ((da[2] % 4) == 0 & (da[2] % 100) == 0) {
+		            da[0] = 29;
+		        }
+		        else {
+		            da[0] = 28;
+		        }
+		    }
+		    if (da[0] > 30 & (da[1] == 04 || da[1] == 06 || da[1] == 09 || da[1] == 11 )) {
+		        da[0] = 30;
+		    }
+		    dt = da.join('/');
+		    if (dt.length == 2 || dt.length == 5) dt += '/';
+		    d.value = dt.replace('//', '/');
+		},
 	},
 	location: {
 		city_district_select:{
@@ -347,7 +383,7 @@ var nhList = {
 
 		//pagination click
 		$(self.form).on('click', '.pagination > li[data-page]:not(.active)', function() {
-			var page = typeof($(this).data('page')) != 'undefined' ? parseInt($(this).data('page')) : null;
+			var page = typeof($(this).data('page')) != _UNDEFINED ? parseInt($(this).data('page')) : null;
 			if(page == null) return false;
 			$(self.form).find('input[name="page"]').val(page);	
 			self.loadListData(function(){
@@ -359,7 +395,7 @@ var nhList = {
 
 		//limit change
 		$(self.form).on('change', 'select#limit', function() {
-			var limit = typeof($(this).val()) != 'undefined' ? parseInt($(this).val()) : null;
+			var limit = typeof($(this).val()) != _UNDEFINED ? parseInt($(this).val()) : null;
 			if(limit == null) return false;
 			$(self.form + ' input[name="limit"]').val(limit);
 			self.loadListData();
@@ -387,7 +423,7 @@ var nhList = {
 		$(self.form).on('click', 'th.sorting:not(.hide-text), th.sorting_asc:not(.hide-text), th.sorting_desc:not(.hide-text)', function() {
 			var sort = $(this).data('sort');
 			var direction = '';
-			if(sort == 'undefined'){
+			if(sort == _UNDEFINED){
 				return false;
 			}
 
@@ -458,7 +494,7 @@ var nhList = {
 	        }
 	    });
 	  
-	    var url = typeof($(self.form).attr('action')) != 'undefined' ? $(self.form).attr('action') : '';
+	    var url = typeof($(self.form).attr('action')) != _UNDEFINED ? $(self.form).attr('action') : '';
 	    url += url.length > 0 ? '?' + $.param(params) : '';
 
 		nhMain.callAjax({

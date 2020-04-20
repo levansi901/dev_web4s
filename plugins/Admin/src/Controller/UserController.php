@@ -49,7 +49,7 @@ class UserController extends AppController {
     }
 
     public function save($id = null)
-    {
+    {        
         $this->layout = false;
         $this->autoRender = false;
 
@@ -63,30 +63,41 @@ class UserController extends AppController {
             $this->responseJson([MESSAGE => __d('admin', 'du_lieu_khong_hop_le')]);
         }
 
+        $utilities = $this->loadComponent('Utilities');
         $users_table = TableRegistry::getTableLocator()->get('Users');
-        $user = $users_table->newEntity($data);    
 
-
-        // check unique username
-        if(!empty($user->username)){
-            $exist_username = $users_table->checkExistUsername(trim($user->username));           
+        // validate data        
+        if(!empty($data['username'])){
+            $data['username'] = trim($data['username']);
+            $exist_username = $users_table->checkExistUsername($data['username']);           
             if($exist_username){
                 $this->responseJson([MESSAGE => __d('admin', 'ten_dang_nhap_da_ton_tai_tren_he_thong')]);
             }
         }
 
-        // check unique username
-        if(!empty($user->email)){
-            $exist_email = $users_table->checkExistEmail(trim($user->email));
+        if(!empty($data['email'])){
+            $data['email'] = trim($data['email']);
+            $exist_email = $users_table->checkExistEmail(trim($data['email']));
             if($exist_email){
                 $this->responseJson([MESSAGE => __d('admin', 'email_da_ton_tai_tren_he_thong')]);
             }
-        }        
+        }
+
+        if(!empty($data['birthday']) ){
+            if(!$utilities->isStringDate($data['birthday'])){
+                $this->responseJson([MESSAGE => __d('admin', 'ngay_sinh') . ' - ' . __d('admin', 'chua_dung_dinh_dang_ngay_thang')]);
+            }
+
+            $data['birthday'] = $utilities->stringDateToInt(trim($data['birthday']));
+        }
+
+
+        // merge data with entity        
+        $user = $users_table->newEntity($data);
 
         // validation another in model
         if($user->hasErrors()){
-            $utilities_component = $this->loadComponent('Utilities');
-            $list_errors = $utilities_component->errorModel($user->getErrors());
+            $list_errors = $utilities->errorModel($user->getErrors());
             $this->responseJson([
                 MESSAGE => !empty($list_errors[0]) ? $list_errors[0] : null,
                 DATA => $list_errors

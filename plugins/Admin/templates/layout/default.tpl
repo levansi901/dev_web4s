@@ -30,6 +30,7 @@
 		<link href="{ADMIN_PATH}/assets/css/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
 		<link href="{ADMIN_PATH}/assets/css/skins/brand/dark.css" rel="stylesheet" type="text/css" />
 		<link href="{ADMIN_PATH}/assets/css/skins/aside/dark.css" rel="stylesheet" type="text/css" />
+		<link href="{ADMIN_PATH}/assets/css/custom.css" rel="stylesheet" type="text/css" />
 
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" href="{ADMIN_PATH}/favicon.ico" />
@@ -148,7 +149,9 @@
 		<!--begin::Global Theme Bundle(used by all pages) -->
 		<script src="{ADMIN_PATH}/assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
 		<script src="{ADMIN_PATH}/assets/js/scripts.bundle.js" type="text/javascript"></script>
+		<script src="{ADMIN_PATH}/assets/js/locales/{$lang}.js" type="text/javascript"></script>
 		<script src="{ADMIN_PATH}/assets/js/main.js" type="text/javascript"></script>
+		
 		<!--end::Global Theme Bundle -->
 
 		<!--begin::Page Vendors(used by this page) -->

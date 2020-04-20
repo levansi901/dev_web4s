@@ -12,6 +12,8 @@ class AppController extends Controller {
 
 	public function initialize(): void{
 	    parent::initialize();
+
+        $this->set(LANG, 'vi');
 	}
 
 	public function beforeRender(EventInterface $event) {

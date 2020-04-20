@@ -289,6 +289,8 @@ msgstr "Tên đăng nhập đã tồn tại trên hệ thống"
 msgid "email_da_ton_tai_tren_he_thong"
 msgstr "Email đã tồn tại trên hệ thống"
 
+msgid "chua_dung_dinh_dang_ngay_thang"
+msgstr "Chưa đúng định dạng ngày tháng"
 
 
 

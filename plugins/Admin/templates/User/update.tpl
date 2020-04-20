@@ -23,67 +23,70 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
-                <div class="kt-form kt-form--label-right">
-                    <div class="kt-form__body">
-                        <div class="kt-section kt-section--first">
-                            <div class="kt-section__body">
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">
-                                        {__d('admin', 'ten_dang_nhap')}
-                                    </label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <div class="kt-spinner">
-                                            <input name="username" class="form-control" type="text" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">
-                                        Email
-                                    </label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <input name="email"  type="text" class="form-control" value="" placeholder="abc@gmail.com">
-                                    </div>
-                                </div>     
-
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">
-                                        {__d('admin', 'mat_khau')}
-                                    </label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <input name="password" type="password" class="form-control" value="">
-                                    </div>
-                                </div>
-
-                                <div class="form-group form-group-last row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">
-                                        {__d('admin', 'xac_nhan_mat_khau')}
-                                    </label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <input name="verify_password" type="password" class="form-control" value="">
-                                    </div>
-                                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">
+                        {__d('admin', 'ten_dang_nhap')}
+                        <span class="kt-font-danger">*</span>
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-shield"></i>
+                                </span>
                             </div>
+                            <input name="username" class="form-control" type="text" value="">                            
                         </div>
-
-                        <div class="kt-separator kt-separator--border-dashed kt-separator--portlet-fit kt-separator--space-lg"></div>
-
-                        <div class="kt-section kt-section--first">
-                            <div class="kt-section__body">                                        
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">
-                                        {__d('admin', 'nhom_quyen')}
-                                    </label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        {$this->Form->select('role_id', $list_role, ['name'=>'role_id', 'empty' => "{__d('admin', 'lua_chon')} ...", 'default' => '','class' => 'form-control'])}                                              
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                      
-                        
                     </div>
-                </div>                  
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">
+                        Email
+                        <span class="kt-font-danger">*</span>
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                            </div>
+                            <input name="email"  type="text" class="form-control" value="">
+                        </div>
+                    </div>
+                </div>     
+
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">
+                        {__d('admin', 'mat_khau')}
+                        <span class="kt-font-danger">*</span>
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input name="password" id="password" type="password" class="form-control" value="">
+                    </div>
+                </div>
+
+                <div class="form-group form-group-last row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">
+                        {__d('admin', 'xac_nhan_mat_khau')}
+                        <span class="kt-font-danger">*</span>
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input name="verify_password" type="password" class="form-control" value="">
+                    </div>
+                </div>
+
+                <div class="kt-separator kt-separator--border kt-separator--portlet-fit kt-separator--space-lg"></div>
+
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">
+                        {__d('admin', 'nhom_quyen')}
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                        {$this->Form->select('role_id', $list_role, ['name'=>'role_id', 'empty' => "{__d('admin', 'lua_chon')} ...", 'default' => '','class' => 'form-control'])}                                              
+                    </div>
+                </div>            
             </div>
         </div>
 
@@ -115,6 +118,7 @@
                 <div class="form-group row">
                     <label class="col-xl-3 col-lg-3 col-form-label">
                         {__d('admin', 'ho_va_ten')}
+                        <span class="kt-font-danger">*</span>
                     </label>
                     <div class="col-lg-9 col-xl-6">
                         <input name="full_name" class="form-control" type="text" value="">
@@ -129,7 +133,7 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="la la-phone"></i>
+                                    <i class="fa fa-phone"></i>
                                 </span>
                             </div>
                             <input name="phone" type="text" class="form-control" value="">
@@ -142,7 +146,14 @@
                         {__d('admin', 'dia_chi')}
                     </label>
                     <div class="col-lg-9 col-xl-6">
-                        <input name="address" class="form-control" type="text" value="">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-map"></i>
+                                </span>
+                            </div>
+                            <input name="address" class="form-control" type="text" value="">
+                        </div>
                     </div>
                 </div>
 
@@ -152,8 +163,13 @@
                     </label>
                     <div class="col-lg-9 col-xl-6">
                         <div class="input-group">
-                            <input name="birthday" class="form-control" type="date" value="" placeholder="dd/mm/yyyy">
-                        </div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-birthday-cake"></i>
+                                </span>
+                            </div>
+                            <input name="birthday" class="form-control date-keyup" type="text" value="" placeholder="dd/mm/yyyy">
+                        </div>                        
                     </div>
                 </div>
             </div>
