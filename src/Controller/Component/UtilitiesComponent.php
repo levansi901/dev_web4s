@@ -37,4 +37,16 @@ class UtilitiesComponent extends Component
         return strtotime(date('Y-m-d', strtotime($str_date) ));
     }
 
+    public function formatPaginationInfo($pagination_info = []){
+        $result = [
+            'field' => !empty($pagination_info['sort']) ? $pagination_info['sort'] : 'id',
+            'sort' => !empty($pagination_info['direction']) ? $pagination_info['direction'] : DESC,
+            'page' => !empty($pagination_info['page']) ? intval($pagination_info['page']) : 1,
+            'pages' => !empty($pagination_info['pageCount']) ? intval($pagination_info['pageCount']) : 1,
+            'perpage' => !empty($pagination_info['perPage']) ? intval($pagination_info['perPage']) : PAGINATION_LIMIT_ADMIN,
+            'total' => !empty($pagination_info['count']) ? intval($pagination_info['count']) : 0
+        ];
+
+        return $result;
+    }
 }

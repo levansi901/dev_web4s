@@ -22,11 +22,38 @@ class UserController extends AppController {
         $this->viewBuilder()->enableAutoLayout(false);
     }
 
-    public function list($type = null) 
-    {
+    public function list() 
+    {        
         $this->js_page = '/assets/js/pages/list_user.js';
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));        
         $this->set('title_for_layout', __d('admin', 'tai_khoan'));
+    }
+
+    public function listJson(){
+        $table = TableRegistry::getTableLocator()->get('Users');
+        $utilities = $this->loadComponent('Utilities');
+
+        $users = [];        
+        try {
+            $users = $this->paginate($table->queryListUsers(), [
+                'limit' => 5,
+                'order' => [
+                    'id' => 'desc'
+                ]
+            ])->toArray();
+        } catch (NotFoundException $e) {
+
+        }
+
+        $pagination_info = !empty($this->request->getAttribute('paging')['Users']) ? $this->request->getAttribute('paging')['Users'] : [];
+        $pagination_info = $utilities->formatPaginationInfo($pagination_info);
+
+        $this->responseJson([
+            CODE => SUCCESS,
+            MESSAGE => __d('admin', 'xu_ly_du_lieu_thanh_cong'),
+            DATA => $users, 
+            META => $pagination_info
+        ]);
     }
 
 

@@ -16,7 +16,8 @@ class UsersTable extends Table
         parent::initialize($config);
         $this->setTable('users');
 
-        $this->setDisplayField('full_name');
+        $this->setPrimaryKey('id');
+        $this->setDisplayField('id');
 
         $this->addBehavior('UnixTimestamp', [
             'events' => [
@@ -28,9 +29,11 @@ class UsersTable extends Table
         ]);
 
         $this->belongsTo('Roles', [
+            'className' => 'Publishing.Roles',
             'foreignKey' => 'role_id',
-            'joinType' => 'INNER'
+            'propertyName' => 'role'
         ]);
+
     }
 
     public function validationDefault(Validator $validator): Validator
@@ -54,14 +57,17 @@ class UsersTable extends Table
         return $validator;
     }
 
-    public function getListUsers()
+    public function queryListUsers() 
     {
         $table = TableRegistry::getTableLocator()->get('Users');
-        $list = $table->find()->order(['id' => 'DESC'])->toArray();
-        return $list;
+
+        $fields = ['Users.id', 'Users.username', 'Users.image_avatar', 'Users.full_name', 'Users.email', 'Users.phone', 'Users.address', 'Users.birthday', 'Users.status', 'Roles.id', 'Roles.name'];
+
+        return $table->find()->contain(['Roles'])->where(['Users.is_delete' => 0])->select($fields);
     }
 
-    public function checkExistEmail($email = null){
+    public function checkExistEmail($email = null)
+    {
         if(empty($email)) return false;
 
         $table = TableRegistry::getTableLocator()->get('Users');
@@ -70,7 +76,8 @@ class UsersTable extends Table
         return !empty($user->id) ? true : false;
     }
 
-    public function checkExistUsername($username = null){
+    public function checkExistUsername($username = null)
+    {
         if(empty($username)) return false;
 
         $table = TableRegistry::getTableLocator()->get('Users');

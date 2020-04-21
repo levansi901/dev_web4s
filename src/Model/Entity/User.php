@@ -7,11 +7,9 @@ use Cake\ORM\Entity;
 
 class Users extends Entity
 {
-
     protected $_hidden = [
         'role_id',
         'password',
-        'status',
         'is_delete'
     ];
 

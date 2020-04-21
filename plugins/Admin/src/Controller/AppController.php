@@ -40,9 +40,17 @@ class AppController extends Controller {
         
         $result = [
             CODE => $code,
-            MESSAGE => $message,
-            DATA => !empty($params[DATA]) ? $params[DATA] : []
-        ];        
+            MESSAGE => $message
+        ];
+
+        if(isset($params[DATA])){
+            $result[DATA] = !empty($params[DATA]) ? $params[DATA] : [];
+        }
+
+        if(isset($params[META])){
+            $result[META] = !empty($params[META]) ? $params[META] : [];
+        }
+
         exit(json_encode($result));
     }
 }

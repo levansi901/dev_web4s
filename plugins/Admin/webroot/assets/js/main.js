@@ -20,10 +20,10 @@ var blockOptions = {
 
 var nhMain = {
 	csrfToken: null,
-	cdnUrl: null,
+	cdnUrl: $('#csrf_token').val(),
 	init: function(){
 		var self = this;
-		self.csrfToken = $('#csrf_token').val();
+		// self.csrfToken = $('#csrf_token').val();
     	self.cdnUrl = $('#cdn_url').val();
 
     	// self.activeMenu();

@@ -5,6 +5,7 @@ define('KEY', 'key');
 define('JSON', 'json');
 define('CODE', 'code');
 define('DATA', 'data');
+define('META', 'meta');
 define('STATUS', 'status');
 define('MESSAGE', 'message');
 define('SUCCESS', 'success');
