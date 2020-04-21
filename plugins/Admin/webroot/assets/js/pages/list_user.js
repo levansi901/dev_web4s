@@ -43,36 +43,41 @@ var nhLoadListDatabase = function() {
 
 		columns: [
 			{
-				field: 'RecordID',
+				field: 'id',
 				title: '',
 				sortable: 'asc',
-				width: 20,
+				width: 30,
 				type: 'number',
 				// selector: false,
 				selector: {class: 'kt-checkbox--solid'},
 				textAlign: 'center',
 			}, 
 			{
-				field: 'OrderID',
-				title: 'Order ID',
+				field: 'full_name',
+				title: 'Name',
 			}, 
 			{
-				field: 'Country',
-				title: 'Country',
+				field: 'username',
+				title: 'Username'
+			},
+			{
+				field: 'role_name',
+				title: 'Username',
 				template: function(row) {
-					return row.Country + ' ' + row.ShipCountry;
-				},
-			}, 
+					return row.role.name;
+				}
+			},
 			{
-				field: 'ShipDate',
-				title: 'Ship Date',
+				field: 'email',
+				title: 'Email',
+			},
+			{
+				field: 'birthday',
+				title: 'Email',
 				type: 'date',
 				format: 'MM/DD/YYYY',
-			}, 
-			{
-				field: 'CompanyName',
-				title: 'Company Name',
-			}, 
+
+			},
 			{
 				field: 'Status',
 				title: 'Status',
@@ -111,7 +116,7 @@ var nhLoadListDatabase = function() {
 					</a>\
 				';
 				},
-			}],
+			}]
 	};
 	
 	var listData = function() {
