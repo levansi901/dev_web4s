@@ -48,52 +48,20 @@
                         <div class="row align-items-center">
                             <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
                                 <div class="kt-input-icon kt-input-icon--left">
-                                    <input id="nh-general-search" type="text" class="form-control" placeholder="Search...">
+                                    <input id="nh-keyword" name="keyword" type="text" class="form-control" placeholder="{__d('admin', 'tim_kiem')}...">
                                     <span class="kt-input-icon__icon kt-input-icon__icon--left">
                                         <span><i class="la la-search"></i></span>
                                     </span>
                                 </div>
                             </div>
                             <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                                <div class="kt-form__group kt-form__group--inline">
-                                    <div class="kt-form__label">
-                                        <label>Status:</label>
-                                    </div>
+                                <div class="kt-form__group">
                                     <div class="kt-form__control">
-                                        <select class="form-control bootstrap-select" id="kt_form_status">
-                                            <option value="">All</option>
-                                            <option value="1">Pending</option>
-                                            <option value="2">Delivered</option>
-                                            <option value="3">Canceled</option>
-                                            <option value="4">Success</option>
-                                            <option value="5">Info</option>
-                                            <option value="6">Danger</option>
-                                        </select>
+                                        {$this->Form->select('status', $list_status, ['id'=>'nh_status', 'empty' => {__d('admin', 'trang_thai')}, 'default' => '', 'class' => 'form-control bootstrap-select'])}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                                <div class="kt-form__group kt-form__group--inline">
-                                    <div class="kt-form__label">
-                                        <label>Type:</label>
-                                    </div>
-                                    <div class="kt-form__control">
-                                        <select class="form-control bootstrap-select" id="kt_form_type">
-                                            <option value="">All</option>
-                                            <option value="1">Online</option>
-                                            <option value="2">Retail</option>
-                                            <option value="3">Direct</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
-                    </div>
-                    <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
-                        <a href="#" class="btn btn-default kt-hidden">
-                            <i class="la la-cart-plus"></i> New Order
-                        </a>
-                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
                     </div>
                 </div>
             </div>
@@ -103,23 +71,28 @@
                     <div class="col-xl-12">
                         <div class="kt-form__group kt-form__group--inline">
                             <div class="kt-form__label kt-form__label-no-wrap">
-                                <label class="kt-font-bold kt-font-danger-">Selected
-                                    <span id="nh-selected-number">0</span> records:</label>
+                                <label class="kt-font-bold kt-font-danger-">
+                                    {__d('admin', 'da_chon')}
+                                    <span id="nh-selected-number">0</span> :
+                                </label>
                             </div>
+
                             <div class="kt-form__control">
                                 <div class="btn-toolbar">
-                                    <div class="dropdown">
+                                    <div class="dropdown mr-10">
                                         <button type="button" class="btn btn-brand btn-sm dropdown-toggle" data-toggle="dropdown">
-                                            Update status
+                                            {__d('admin', 'thay_doi_trang_thai')}
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Pending</a>
-                                            <a class="dropdown-item" href="#">Delivered</a>
-                                            <a class="dropdown-item" href="#">Canceled</a>
+                                            {foreach from = $list_status item = status}
+                                                <a class="dropdown-item nh-change-status-all" href="javascript:;">{$status}</a>
+                                            {/foreach}
                                         </div>
                                     </div>
                                   
-                                    <button class="btn btn-sm btn-danger" type="button" id="kt_datatable_delete_all1">Delete All</button>                                   
+                                    <button class="btn btn-sm btn-danger nh-delete-all" type="button">
+                                        {__d('admin', 'xoa_tat_ca')}
+                                    </button>                                   
                                 </div>
                             </div>
                         </div>

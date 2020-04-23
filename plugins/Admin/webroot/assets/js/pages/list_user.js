@@ -7,13 +7,13 @@ var nhLoadListDatabase = function() {
 			type: 'remote',
 			source: {
 				read: {
-					url: '/admin/user/list/json',
+					url: adminPath + '/user/list/json',
 					headers: {
 						'X-CSRF-Token': csrfToken
 					},
 					map: function(raw) {
 						var dataSet = raw;
-						if (typeof raw.data !== 'undefined') {
+						if (typeof raw.data !== _UNDEFINED) {
 							dataSet = raw.data;
 						}
 						return dataSet;
@@ -38,7 +38,7 @@ var nhLoadListDatabase = function() {
 			checkbox: true
 		},
 		search: {
-			input: $('#nh-general-search'),
+			input: $('#nh-keyword'),
 		},
 
 		columns: [
@@ -48,73 +48,61 @@ var nhLoadListDatabase = function() {
 				sortable: 'asc',
 				width: 30,
 				type: 'number',
-				// selector: false,
 				selector: {class: 'kt-checkbox--solid'},
 				textAlign: 'center',
-			}, 
-			{
-				field: 'full_name',
-				title: 'Name',
-			}, 
-			{
-				field: 'username',
-				title: 'Username'
 			},
 			{
-				field: 'role_name',
-				title: 'Username',
+				field: 'full_name',
+				title: locales.ho_ten,
+				autoHide: false,
+			}, 
+			{
+				field: 'role_id',
+				title: locales.phan_quyen,
 				template: function(row) {
-					return row.role.name;
+					var role = KTUtil.isset(row, 'role') ? row.role : {};
+					return role ? role.name : '';
 				}
 			},
 			{
 				field: 'email',
-				title: 'Email',
+				title: 'Email',				
 			},
 			{
-				field: 'birthday',
-				title: 'Email',
-				type: 'date',
-				format: 'MM/DD/YYYY',
-
+				field: 'phone',
+				title: locales.so_dien_thoai,
 			},
 			{
-				field: 'Status',
-				title: 'Status',
+				field: 'status',
+				title: locales.trang_thai,
+				width: 110,
 				template: function(row) {
-					var status = {
-						0: {'title': 'Danger', 'class': ' kt-badge--danger'},
-						1: {'title': 'Success', 'class': ' kt-badge--success'}						
-					};
-					return '<span class="kt-badge ' + status[row.status].class + ' kt-badge--inline kt-badge--pill">' + status[row.status].title + '</span>';
+					return '<span class="kt-badge ' + statusOptions[row.status].class + ' kt-badge--inline kt-badge--pill">' + statusOptions[row.status].title + '</span>';
 				},
 			},  
 			{
-				field: 'Actions',
-				title: 'Actions',
+				field: 'actions',
+				title: '<i class="la la-cogs fs-20"></i>',
 				sortable: false,
-				width: 110,
+				width: 30,
 				overflow: 'visible',
 				autoHide: false,
-				template: function() {
+				template: function(row) {
 					return '\
-					<div class="dropdown">\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-sm" data-toggle="dropdown">\
-                            <i class="flaticon2-gear"></i>\
-                        </a>\
-					  	<div class="dropdown-menu dropdown-menu-right">\
-					    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
-					    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
-					    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
-					  	</div>\
-					</div>\
-					<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="Edit details">\
-						<i class="flaticon2-paper"></i>\
-					</a>\
-					<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="Delete">\
-						<i class="flaticon2-trash"></i>\
-					</a>\
-				';
+						<div class="dropdown">\
+							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown">\
+                                <i class="la la-ellipsis-h"></i>\
+                            </a>\
+						  	<div class="dropdown-menu dropdown-menu-right">\
+						    	<a class="dropdown-item" href="' + adminPath + '/user/update/' + row.id + '"><i class="la la-edit w-20"></i>' + locales.sua_thong_tin + '</a>\
+						    	<div class="dropdown-divider"></div>\
+						    	<a class="dropdown-item nh-change-status" href="javascript:;"><i class="la la-check text-success w-20 fs-15"></i>' + locales.hoat_dong + '</a>\
+						    	<a class="dropdown-item nh-change-status" href="javascript:;"><i class="la la-ban w-20 fs-15"></i>' + locales.ngung_hoat_dong + '</a>\
+						    	<div class="dropdown-divider"></div>\
+						    	<a class="dropdown-item nh-delete" href="javascript:;"><i class="la la-trash-o text-danger w-20 fs-15"></i>' + locales.xoa + '</a>\
+						  	</div>\
+						</div>\
+					';
 				},
 			}]
 	};
@@ -122,18 +110,17 @@ var nhLoadListDatabase = function() {
 	var listData = function() {
 		var datatable = $('.kt-datatable').KTDatatable(options);
 
-	    $('#kt_form_status').on('change', function() {
-	      datatable.search($(this).val().toLowerCase(), 'Status');
+	    $('#nh_status').on('change', function() {
+	      	datatable.search($(this).val().toLowerCase(), 'status');
 	    });
 
-	    $('#kt_form_type').on('change', function() {
-	      datatable.search($(this).val().toLowerCase(), 'Type');
-	    });
+	    $('#nh_status').selectpicker();
 
-	    $('#kt_form_status, #kt_form_type').selectpicker();
-
-	    datatable.on('kt-datatable--on-click-checkbox kt-datatable--on-layout-updated', function(e) {
+	    datatable.on('kt-datatable--on-check kt-datatable--on-uncheck kt-datatable--on-layout-updated', function(e) {
             var ids = datatable.checkbox().getSelectedId();
+            var ids = ids.filter(function(itm, i, a) {
+			    return i == a.indexOf(itm);
+			});
             var count = ids.length;
             $('#nh-selected-number').html(count);
             if (count > 0) {

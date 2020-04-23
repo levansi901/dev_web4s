@@ -57,13 +57,27 @@ class UsersTable extends Table
         return $validator;
     }
 
-    public function queryListUsers() 
+    public function queryListUsers($params = []) 
     {
         $table = TableRegistry::getTableLocator()->get('Users');
 
+        // fields select
         $fields = ['Users.id', 'Users.username', 'Users.image_avatar', 'Users.full_name', 'Users.email', 'Users.phone', 'Users.address', 'Users.birthday', 'Users.status', 'Roles.id', 'Roles.name'];
 
-        return $table->find()->contain(['Roles'])->where(['Users.is_delete' => 0])->select($fields);
+        // filter by conditions
+        $where = ['Users.is_delete' => 0];        
+        $filter = !empty($params['filter']) ? $params['filter'] : [];
+
+        $keyword = !empty($filter['keyword']) ? trim($filter['keyword']) : null;
+        $status = isset($filter['status']) ? intval($filter['status']) : null;
+        if(!empty($keyword)){
+            $where['Users.search_unicode LIKE'] = '%' . $keyword . '%';
+        }
+
+        if(!is_null($status)){
+            $where['Users.status'] = $status;
+        }
+        return $table->find()->contain(['Roles'])->where($where)->select($fields);
     }
 
     public function checkExistEmail($email = null)

@@ -8642,7 +8642,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
                             select: 'Select page size',
                             all: 'all',
                         },
-                        info: 'Showing {{start}} - {{end}} of {{total}}',
+                        info: ' {{start}} - {{end}} / {{total}}',
                     },
                 },
             },

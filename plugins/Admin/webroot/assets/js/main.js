@@ -1,3 +1,5 @@
+"use strict";
+
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
@@ -17,13 +19,16 @@ var blockOptions = {
     message: locales.vui_long_cho + '...'
 }
 
+var statusOptions = {
+	0: {'title': locales.ngung_hoat_dong, 'class': ' kt-badge--danger'},
+	1: {'title': locales.hoat_dong, 'class': ' kt-badge--success'}						
+};
 
 var nhMain = {
-	csrfToken: null,
-	cdnUrl: $('#csrf_token').val(),
+	csrfToken: $('#csrf_token').val(),
+	cdnUrl: null,
 	init: function(){
 		var self = this;
-		// self.csrfToken = $('#csrf_token').val();
     	self.cdnUrl = $('#cdn_url').val();
 
     	// self.activeMenu();
@@ -31,46 +36,6 @@ var nhMain = {
     	$(document).on('focus', '.auto-numeric, .phone-input', function(e) {
     		$(this).select();
     	});    
-	},
-	ajaxSubmitForm: function(params = {}, callback){
-
-		if (typeof(callback) != 'function') {
-	        callback = function () {};
-	    }
-
-		var self = this;
-	    var url = typeof(params.url) != _UNDEFINED ? params.url : '';	    
-	    var type = typeof(params.type) != _UNDEFINED ? params.type : 'POST';
-	    var dataType = typeof(params.dataType) != _UNDEFINED ? params.dataType : 'json';
-	    var data = typeof(params.data) != _UNDEFINED ? params.data : {};
-	    var async = typeof(params.async) != _UNDEFINED ? params.async : true;
-	    var cache = typeof(params.cache) != _UNDEFINED ? params.cache : false;
-	    var processData = typeof(params.processData) != _UNDEFINED ? params.processData : true;
-	    var contentType = typeof(params.contentType) != _UNDEFINED ? params.contentType : true;
-	    if(url.length == 0){
-	    	self.notification({
-            	type: 'error',
-            	title: 'Đường dẫn thực thi không hợp lệ'
-            });
-            return false;
-	    }
-		$.ajax({
-			headers: {
-		        'X-CSRF-Token': self.csrfToken
-		    },
-	        async: async,
-	        url: url,
-	        type: type,
-	        dataType: dataType,
-	        data: data,	        
-	        cache: cache,
-	        processData: processData,
-	        contentType: contentType,
-	    }).done(function(response) {
-	    	callback(response);
-		}).fail(function(jqXHR, textStatus, errorThrown) {
-			toastr.error(textStatus + ': ' + errorThrown);
-		});
 	},
 	callAjax: function(params = {}){
 		var self = this;
@@ -314,6 +279,16 @@ var nhMain = {
 		    }
 		    return number;
 		},
+		parseIntToDateString: function(number = null){
+			var self = this;
+			var date_string = '';
+			var int_number = nhMain.utilities.parseInt(number);
+			if(int_number > 0){
+				var date = new Date(int_number * 1000);	
+				date_string = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+			}
+			return date_string;
+		},
 		dateOnkeyup: function(d, e){
 			var pK = (e.which) ? e.which : window.event.keyCode;
 		    if (pK == 8) {
@@ -333,7 +308,7 @@ var nhMain = {
 		        da[1] = '0' + da[1].substr(0, da[1].length - 1);
 		    }
 		    if (da[2] > 9999) da[2] = da[2].substr(0, da[2].length - 1);
-		    if (da[0] > 28 & da[1] == 02 & da[2] > 999) {
+		    if (da[0] > 28 & da[1] == 2 & da[2] > 999) {
 		        if ((da[2] % 4) == 0 & (da[2] % 100) == 0) {
 		            da[0] = 29;
 		        }
@@ -341,7 +316,7 @@ var nhMain = {
 		            da[0] = 28;
 		        }
 		    }
-		    if (da[0] > 30 & (da[1] == 04 || da[1] == 06 || da[1] == 09 || da[1] == 11 )) {
+		    if (da[0] > 30 & (da[1] == 4 || da[1] == 6 || da[1] == 9 || da[1] == 11 )) {
 		        da[0] = 30;
 		    }
 		    dt = da.join('/');
@@ -373,37 +348,51 @@ var nhMain = {
 }
 
 var nhList = {
-	wrap_list: '#wrap-list',
+	wrap_list: '.kt-datatable',
 	wrap_filter: '#wrap-filter',
 	wrap_more_filter: '#wrap-more-filter',
 	form: '#form-list-data',
-	table: '#data-table',
+	table: '.kt-datatable__table',
 	init: function(){
 		var self = this;		
 
-		//pagination click
-		$(self.form).on('click', '.pagination > li[data-page]:not(.active)', function() {
-			var page = typeof($(this).data('page')) != _UNDEFINED ? parseInt($(this).data('page')) : null;
-			if(page == null) return false;
-			$(self.form).find('input[name="page"]').val(page);	
-			self.loadListData(function(){
-				$('html, body').animate({
-			        scrollTop: $(self.wrap_list).offset().top - 5
-			    }, 400);
+		$(self.wrap_list).on('click', '.nh-delete', function() {
+			var ids = [];
+			$(self.table + ' .select-record:checked').each(function (i, checkbox) {
+				var id = $(this).closest('tr').data('id');
+				if(typeof(id) != 'undefined' && parseInt(id) > 0){
+					ids.push(id);
+				}
+		    });
+
+		    if(ids.length == 0){
+		    	ss_page.notification({
+					type: 'error',
+					title: 'Vui lòng chọn một bản ghi'
+				});
+		    }
+
+		    ss_page.alertWarning({
+				title: 'Xóa sản phẩm',
+				text: 'Bạn chắc chắn muốn xóa những sản phẩm đã chọn ?'
+			}, function(rs){
+				ss_page.callAjax({
+					url: '/product/delete',
+					data:{
+						ids: ids
+					}
+				}).done(function(response) {
+					if(typeof(response.success) != 'undefined' && response.success){
+						$.each(ids, function(i, product_item_id) {
+						  	$(self.table + ' tr[data-id="'+ product_item_id +'"]').remove();
+						});
+
+						if($(self.table + ' tr[data-id]').length == 0){
+							ss_list.loadListData();
+						}
+					}	            
+				})
 			});
-		});
-
-		//limit change
-		$(self.form).on('change', 'select#limit', function() {
-			var limit = typeof($(this).val()) != _UNDEFINED ? parseInt($(this).val()) : null;
-			if(limit == null) return false;
-			$(self.form + ' input[name="limit"]').val(limit);
-			self.loadListData();
-		});
-
-		//search
-		$(self.form).on('click', '#filter-data', function() {
-			self.loadListData();
 		});
 
 		//reset input search
@@ -417,66 +406,9 @@ var nhList = {
 		//more filter
 		$(self.form).on('click', '#more-filter', function() {
 			self.toggleMoreFilter();
-		});
-
-		//sort data table
-		$(self.form).on('click', 'th.sorting:not(.hide-text), th.sorting_asc:not(.hide-text), th.sorting_desc:not(.hide-text)', function() {
-			var sort = $(this).data('sort');
-			var direction = '';
-			if(sort == _UNDEFINED){
-				return false;
-			}
-
-			var type_sort = '';
-			if($(this).hasClass('sorting')){
-				type_sort = 'sorting';		
-			}
-
-			if($(this).hasClass('sorting_asc')){
-				type_sort = 'asc';
-			}
-
-			if($(this).hasClass('sorting_desc')){
-				type_sort = 'desc';
-			}
-
-			$(self.table).find('th[data-sort]').removeClass('sorting_asc sorting_desc').addClass('sorting');
-			switch(type_sort){
-				case 'sorting':
-				case 'desc':
-					$(this).removeClass('sorting').addClass('sorting_asc');
-					direction = 'asc';
-					break;
-				case 'asc':
-					$(this).removeClass('sorting').addClass('sorting_desc');
-					direction = 'desc';
-					break;
-			}
-
-			$(self.form).find('input[name="sort"]').val(sort);
-			$(self.form).find('input[name="direction"]').val(direction);
-
-			self.loadListData();
-		});
-
-		//check all
-		$(self.form).on('change', '#select-all', function() {
-			$(self.table).find('.select-record').prop('checked', $(this).is(":checked"));			
-			self.toggleShowActionList($(this).is(":checked"));
-		});
-
-		//checkbox change
-		$(self.form).on('change', 'input.select-record', function() {
-			if($(this).is(":checked") && $(self.table + ' input.select-record:checked').length == 1){
-				self.toggleShowActionList(true);
-			}
-
-			if(!$(this).is(":checked") && $(self.table + ' input.select-record:checked').length == 0){
-				self.toggleShowActionList(false);
-			}
-		});		
-
+		});	
 	},
+
 	loadListData: function(callback){
 
 		if (typeof(callback) != 'function') {
@@ -545,15 +477,3 @@ var nhList = {
 $(document).ready(function() {
 	nhMain.init();
 });
-
-// $(document).ajaxStart(function () {
-//     preloader.on();
-// });
-
-// $(document).ajaxComplete(function () {
-//     preloader.off();
-// });
-
-// $(document).ajaxError(function () {
-//     preloader.off();
-// });

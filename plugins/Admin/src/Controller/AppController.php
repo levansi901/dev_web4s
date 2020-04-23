@@ -11,9 +11,7 @@ static $js_page = [];
 class AppController extends Controller {
 
 	public function initialize(): void{
-	    parent::initialize();
-
-        $this->set(LANG, 'vi');
+	    parent::initialize();        
 	}
 
 	public function beforeRender(EventInterface $event) {
@@ -21,6 +19,8 @@ class AppController extends Controller {
     	if (!$this->request->is('ajax')) {
             $this->set('js_page', !empty($this->js_page) ? $this->js_page : []);
         }
+
+        $this->set(LANG, 'vi');
 	}
 
     protected function responseJson($params = []) {

@@ -7,6 +7,12 @@ msgstr "Danh sách"
 msgid "da_chon"
 msgstr "Đã chọn"
 
+msgid "ban_ghi"
+msgstr "Bản ghi"
+
+msgid "trang_thai"
+msgstr "Trạng thái"
+
 msgid "thay_doi_trang_thai"
 msgstr "Thay đổi trạng thái"
 
@@ -18,6 +24,9 @@ msgstr "Không hoạt động"
 
 msgid "xoa"
 msgstr "Xóa"
+
+msgid "xoa_tat_ca"
+msgstr "Xóa tất cả"
 
 msgid "quay_lai"
 msgstr "Quay lại"
@@ -36,6 +45,9 @@ msgstr "Lưu &amp; thêm mới"
 
 msgid "luu_&_quay_lai"
 msgstr "Lưu &amp; quay lại"
+
+msgid "thay_doi_trang_thai"
+msgstr "Thay đổi trạng thái"
 
 msgid "lua_chon"
 msgstr "Lựa chọn"

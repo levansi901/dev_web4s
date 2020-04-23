@@ -148,6 +148,9 @@
 		<!-- end::Input hidden -->
 		
 		<!--begin::Global Theme Bundle(used by all pages) -->
+		<script type="text/javascript">
+			var adminPath = "{ADMIN_PATH}";
+		</script>
 		<script src="{ADMIN_PATH}/assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
 		<script src="{ADMIN_PATH}/assets/js/scripts.bundle.js" type="text/javascript"></script>
 		<script src="{ADMIN_PATH}/assets/js/locales/{$lang}.js" type="text/javascript"></script>

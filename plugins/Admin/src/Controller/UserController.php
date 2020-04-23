@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use Admin\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\Http\Response;
 use Cake\ORM\Query;
@@ -15,7 +16,6 @@ class UserController extends AppController {
     public function initialize(): void
     {
         parent::initialize();
-        // $this->loadModel('Users');
     }
 
 	public function login() {
@@ -23,8 +23,11 @@ class UserController extends AppController {
     }
 
     public function list() 
-    {        
+    {
+
         $this->js_page = '/assets/js/pages/list_user.js';
+
+        $this->set('list_status', Configure::read('LIST_STATUS'));
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));        
         $this->set('title_for_layout', __d('admin', 'tai_khoan'));
     }
@@ -33,29 +36,47 @@ class UserController extends AppController {
         $table = TableRegistry::getTableLocator()->get('Users');
         $utilities = $this->loadComponent('Utilities');
 
-        $users = [];        
-        try {
-            $users = $this->paginate($table->queryListUsers(), [
-                'limit' => 5,
-                'order' => [
-                    'id' => 'desc'
-                ]
-            ])->toArray();
-        } catch (NotFoundException $e) {
+        $data_post = $params = $users = $sort = [];
+        $limit = PAGINATION_LIMIT_ADMIN;
+        $page = 1;
+        if ($this->request->is('post')) {
+            $data_post = !empty($this->request->getData()) ? $this->request->getData() : [];
+            $params['filter'] = !empty($data_post['query']) ? $data_post['query'] : [];
+            $page = !empty($data_post[PAGINATION][PAGE]) ? intval($data_post[PAGINATION][PAGE]) : 1;
+            $limit = !empty($data_post[PAGINATION]['perpage']) ? intval($data_post[PAGINATION]['perpage']) : PAGINATION_LIMIT_ADMIN;
+            $sort_data = !empty($data_post[SORT]) ? $data_post[SORT] : [];
+            $sort_field = !empty($sort_data[FIELD]) ? $sort_data[FIELD] : null;
+            $sort_type = !empty($sort_data[SORT]) ? $sort_data[SORT] : null;
+            if(!empty($sort_data)){
+                $sort = [$sort_field => $sort_type];
+            }
+        }
 
+        try {
+            $users = $this->paginate($table->queryListUsers($params), [
+                'limit' => $limit,
+                'page' => $page,
+                'order' => $sort
+            ])->toArray();
+        } catch (Exception $e) {
+            $page = 1;
+            $users = $this->paginate($table->queryListUsers(), [
+                'limit' => $limit,
+                'page' => $page,
+                'order' => $sort
+            ])->toArray();
         }
 
         $pagination_info = !empty($this->request->getAttribute('paging')['Users']) ? $this->request->getAttribute('paging')['Users'] : [];
-        $pagination_info = $utilities->formatPaginationInfo($pagination_info);
+        $meta_info = $utilities->formatPaginationInfo($pagination_info);
 
         $this->responseJson([
             CODE => SUCCESS,
             MESSAGE => __d('admin', 'xu_ly_du_lieu_thanh_cong'),
             DATA => $users, 
-            META => $pagination_info
+            META => $meta_info
         ]);
     }
-
 
     public function add()
     {
@@ -76,7 +97,7 @@ class UserController extends AppController {
     }
 
     public function save($id = null)
-    {        
+    {
         $this->layout = false;
         $this->autoRender = false;
 
@@ -111,18 +132,20 @@ class UserController extends AppController {
         }
 
         if(!empty($data['birthday']) ){
-            if(!$utilities->isStringDate($data['birthday'])){
+            if(!$utilities->isDateClient($data['birthday'])){
                 $this->responseJson([MESSAGE => __d('admin', 'ngay_sinh') . ' - ' . __d('admin', 'chua_dung_dinh_dang_ngay_thang')]);
             }
 
             $data['birthday'] = $utilities->stringDateToInt(trim($data['birthday']));
         }
 
+        // format data before save        
+        $data['search_unicode'] = strtolower($utilities->formatSearchUnicode([$data['username'], $data['email'], $data['full_name'], $data['phone'], $data['address']]));
 
         // merge data with entity        
         $user = $users_table->newEntity($data);
 
-        // validation another in model
+        // show error validation in model
         if($user->hasErrors()){
             $list_errors = $utilities->errorModel($user->getErrors());
             $this->responseJson([
@@ -132,17 +155,15 @@ class UserController extends AppController {
         }
         
         try{
+            // save data
             $save = $users_table->save($user);    
             if (empty($save->id)){
                 throw new Exception();
             }
-
             $this->responseJson([CODE => SUCCESS, DATA => ['id' => $save->id]]);
 
         }catch (Exception $e) {
             $this->responseJson([MESSAGE => $e->getMessage()]);  
-        }
-            
-        
+        }   
     }
 }
